@@ -1,0 +1,9 @@
+bin/
+obj/
+/packages/
+
+# editors
+*.swp
+.idea/
+.vs/
+.vscode/
