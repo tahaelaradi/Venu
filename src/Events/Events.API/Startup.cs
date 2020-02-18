@@ -1,13 +1,20 @@
+using System;
 using Events.API.Setup;
+using MassTransit;
+using MassTransit.AspNetCoreIntegration;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
+using Venu.BuildingBlocks.Shared;
+using Venu.BuildingBlocks.Shared.Types;
 using Venu.Events.Common;
 using Venu.Events.DataAccess;
 using Venu.Events.Domain;
+using Venu.Events.IntegrationHandlers;
 using Venu.Events.Services;
 
 namespace Events.API
@@ -26,7 +33,10 @@ namespace Events.API
         {
             services.AddControllers();
             
-            services.AddMediatR(typeof(EventService));
+            services
+                .AddHealthChecks(_configuration)
+                .AddMassTransit(_configuration)
+                .AddMediatR(typeof(EventService));
 
             services.Configure<GlobalConfiguration>(_configuration.GetSection("GlobalConfiguration"));
             
@@ -53,6 +63,45 @@ namespace Events.API
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        }
+    }
+    
+    static class CustomExtensionsMethods
+    {
+        public static IServiceCollection AddHealthChecks(this IServiceCollection services, IConfiguration configuration)
+        {
+            var hcBuilder = services.AddHealthChecks();
+
+            hcBuilder.AddCheck("self", () => HealthCheckResult.Healthy());
+
+            var rabbitMqUrl = configuration.GetOptions<RabbitMqOptions>("rabbitMQ").Url;
+            hcBuilder.AddRabbitMQ(rabbitMqUrl, name: "comnunication-rabbitmqbus-check", tags: new string[] { "rabbitmqbus" });
+
+            return services;
+        }
+
+        public static IServiceCollection AddMassTransit(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddMassTransit((provider) =>
+            {
+                var rabbitMqOption = configuration.GetOptions<RabbitMqOptions>("rabbitMQ");
+
+                return Bus.Factory.CreateUsingRabbitMq(cfg =>
+                {
+                    var host = cfg.Host(new Uri(rabbitMqOption.Url), "/", hc =>
+                    {
+                        hc.Username(rabbitMqOption.UserName);
+                        hc.Password(rabbitMqOption.Password);
+                    });
+                    
+                    // cfg.ReceiveEndpoint("test_service", e =>
+                    // {
+                    //     e.Consumer<EventCreatedConsumer>();
+                    // });
+                });
+            });
+
+            return services;
         }
     }
 }

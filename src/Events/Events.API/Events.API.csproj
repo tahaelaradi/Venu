@@ -5,11 +5,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
+      <ProjectReference Include="..\..\Shared\Shared.csproj" />
+      <ProjectReference Include="..\Events\Events.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Events\Events.csproj" />
+      <PackageReference Include="MassTransit.AspNetCore" Version="6.0.0" />
+      <PackageReference Include="MediatR" Version="8.0.0" />
     </ItemGroup>
 
 

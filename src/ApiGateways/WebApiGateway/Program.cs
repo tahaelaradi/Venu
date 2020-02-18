@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +17,7 @@ namespace Venu.ApiGateways.WebApiGateway
         public static IWebHost BuildWebHost(string[] args)
         {
             return WebHost.CreateDefaultBuilder(args)
-                .UseUrls("http://localhost:8099")
+                .UseUrls("http://localhost:8001")
                 .ConfigureAppConfiguration(
                     ic => ic.AddJsonFile("appsettings.json", true, true))
                 .ConfigureServices(s =>
@@ -28,8 +27,7 @@ namespace Venu.ApiGateways.WebApiGateway
                 })
                 .Configure(a =>
                 {
-                    a.UseOcelot().Wait(); 
-                    
+                    a.UseOcelot().Wait();
                 })
                 .Build();
         }

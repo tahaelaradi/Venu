@@ -6,7 +6,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MediatR" Version="6.0.0" />
+      <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="3.0.0" />
+      <PackageReference Include="MassTransit.AspNetCore" Version="6.0.0" />
+      <PackageReference Include="MassTransit.RabbitMQ" Version="6.0.0" />
+      <PackageReference Include="MediatR" Version="8.0.0" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
       <PackageReference Include="MongoDB.Driver" Version="2.10.0" />
       <PackageReference Include="MongoDbGenericRepository" Version="1.4.0" />
     </ItemGroup>
