@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Serilog;
 
 namespace Venu.ApiGateways.WebApiGateway
 {
@@ -17,7 +18,7 @@ namespace Venu.ApiGateways.WebApiGateway
         public static IWebHost BuildWebHost(string[] args)
         {
             return WebHost.CreateDefaultBuilder(args)
-                .UseUrls("http://localhost:8001")
+                .UseUrls("https://localhost:8001")
                 .ConfigureAppConfiguration(
                     ic => ic.AddJsonFile("appsettings.json", true, true))
                 .ConfigureServices(s =>
@@ -28,6 +29,10 @@ namespace Venu.ApiGateways.WebApiGateway
                 .Configure(a =>
                 {
                     a.UseOcelot().Wait();
+                })
+                .UseSerilog((context, loggerConfiguration) =>
+                {
+                    loggerConfiguration.WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3} {Properties:j}] {Message:lj}{NewLine}{Exception}");
                 })
                 .Build();
         }

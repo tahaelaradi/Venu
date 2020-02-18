@@ -14,7 +14,6 @@ using Venu.BuildingBlocks.Shared.Types;
 using Venu.Events.Common;
 using Venu.Events.DataAccess;
 using Venu.Events.Domain;
-using Venu.Events.IntegrationHandlers;
 using Venu.Events.Services;
 
 namespace Events.API
@@ -32,20 +31,12 @@ namespace Events.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
+
             services
                 .AddHealthChecks(_configuration)
+                .AddMongoDbContext(_configuration)
                 .AddMassTransit(_configuration)
                 .AddMediatR(typeof(EventService));
-
-            services.Configure<GlobalConfiguration>(_configuration.GetSection("GlobalConfiguration"));
-            
-            services.AddTransient<IRepository, Repository>();
-            services.AddTransient<IMongoAccessor, Repository>();
-            
-            var serviceProvider = services.BuildServiceProvider();
-            var repository = serviceProvider.GetService<IRepository>();
-            MongoIndexInitializer.Run(repository).Wait();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,14 +84,23 @@ namespace Events.API
                         hc.Username(rabbitMqOption.UserName);
                         hc.Password(rabbitMqOption.Password);
                     });
-                    
-                    // cfg.ReceiveEndpoint("test_service", e =>
-                    // {
-                    //     e.Consumer<EventCreatedConsumer>();
-                    // });
                 });
             });
 
+            return services;
+        }
+
+        public static IServiceCollection AddMongoDbContext(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<GlobalConfiguration>(configuration.GetSection("GlobalConfiguration"));
+            
+            services.AddTransient<IRepository, Repository>();
+            services.AddTransient<IMongoAccessor, Repository>();
+            
+            var serviceProvider = services.BuildServiceProvider();
+            var repository = serviceProvider.GetService<IRepository>();
+            MongoIndexInitializer.Run(repository).Wait();
+            
             return services;
         }
     }
