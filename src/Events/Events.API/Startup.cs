@@ -1,5 +1,8 @@
 using System;
 using Events.API.Setup;
+using GraphQL;
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
 using MassTransit;
 using MassTransit.AspNetCoreIntegration;
 using MediatR;
@@ -14,6 +17,10 @@ using Venu.BuildingBlocks.Shared.Types;
 using Venu.Events.Common;
 using Venu.Events.DataAccess;
 using Venu.Events.Domain;
+using Venu.Events.GraphType.AppSchema;
+using Venu.Events.GraphType.Mutations;
+using Venu.Events.GraphType.Queries;
+using Venu.Events.GraphType.Types;
 using Venu.Events.Services;
 
 namespace Events.API
@@ -36,6 +43,7 @@ namespace Events.API
                 .AddHealthChecks(_configuration)
                 .AddMongoDbContext(_configuration)
                 .AddMassTransit(_configuration)
+                .AddGraphTypes()
                 .AddMediatR(typeof(EventService));
         }
 
@@ -54,6 +62,9 @@ namespace Events.API
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            
+            app.UseGraphQL<EventsSchema>();
+            app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
         }
     }
     
@@ -100,6 +111,25 @@ namespace Events.API
             var serviceProvider = services.BuildServiceProvider();
             var repository = serviceProvider.GetService<IRepository>();
             MongoIndexInitializer.Run(repository).Wait();
+            
+            return services;
+        }
+        
+        public static IServiceCollection AddGraphTypes(this IServiceCollection services)
+        {
+            services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IMongoAccessor, Repository>();
+            
+            services.AddScoped<EventType>();
+            services.AddScoped<EventInputType>();
+            services.AddScoped<EventsQuery>();
+            services.AddScoped<EventsMutation>();
+            services.AddScoped<EventsSchema>();
+            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+            
+            services.AddGraphQL(o => { o.ExposeExceptions = false; })
+                .AddGraphTypes(ServiceLifetime.Scoped)
+                .AddDataLoader();
             
             return services;
         }

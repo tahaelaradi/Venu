@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Venu.Events.Domain;
+using Venu.Events.Extensions.Converters;
 using Venu.Events.Queries.Dtos;
 
 namespace Venu.Events.Queries.Handlers
@@ -15,16 +16,13 @@ namespace Venu.Events.Queries.Handlers
         
         public FindAllEventsHandler(IRepository eventRepository)
         {
-            this._eventRepository = eventRepository ?? throw new ArgumentNullException(nameof(eventRepository));            
+            _eventRepository = eventRepository ?? throw new ArgumentNullException(nameof(eventRepository));            
         }
 
         public async Task<IEnumerable<EventDto>> Handle(FindAllEventsQuery request,  CancellationToken cancellationToken)
         {
             var result = await _eventRepository.GetAllAsync<Event>(e => true);
-            return result.Select(e => new EventDto()
-            {
-                Name = e.Name
-            }).ToList();
+            return result.Select(e => e.ToDto());
         }
     }
 }
