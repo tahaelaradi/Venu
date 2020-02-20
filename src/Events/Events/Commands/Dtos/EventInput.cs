@@ -1,6 +1,6 @@
 ﻿﻿namespace Venu.Events.Commands.Dtos
 {
-    public class EventDraftDto
+    public class EventInput
     {
         public string Name { get; set; }
     }

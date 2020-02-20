@@ -2,30 +2,32 @@
 using System.Threading.Tasks;
 using MediatR;
 using Venu.Events.Domain;
+using Venu.Events.Queries.Dtos;
 
 namespace Venu.Events.Commands.Handlers
 {
-    public class CreateEventDraftHandler : IRequestHandler<CreateEventDraftCommand, CreateEventDraftResult>
+    public class CreateEventHandler : IRequestHandler<CreateEventCommand, EventDto>
     {
         private readonly IRepository _eventRepository;
 
-        public CreateEventDraftHandler(IRepository eventRepository)
+        public CreateEventHandler(IRepository eventRepository)
         {
             this._eventRepository = eventRepository;
         }
 
-        public async Task<CreateEventDraftResult> Handle(CreateEventDraftCommand request, CancellationToken cancellationToken)
+        public async Task<EventDto> Handle(CreateEventCommand request, CancellationToken cancellationToken)
         {
             var draft = Event.CreateDraft
             (
-                request.EventDraft.Name
+                request.EventInput.Name
             );
 
             await _eventRepository.AddOneAsync(draft);
 
-            return new CreateEventDraftResult
+            return new EventDto
             {
-                EventId = draft.Id
+                Id = draft.Id,
+                Name = draft.Name
             };
         }
     }

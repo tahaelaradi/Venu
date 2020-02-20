@@ -6,17 +6,17 @@ using Venu.Events.Queries.Dtos;
 
 namespace Venu.Events.GraphType.Mutations
 {
-    public class Mutations
+    public class Mutation
     {
         private readonly IMediator _mediator;
-        public Mutations(IMediator mediator)
+        public Mutation(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        // public async Task<CreateEventDraftResult> CreateNewEvent(EventDraftDto eventInput)
-        // {
-        //     return await _mediator.Send(new CreateEventDraftCommand(eventInput));
-        // }
+        public async Task<EventDto> CreateNewEvent(EventInput eventInput)
+        {
+            return await _mediator.Send(new CreateEventCommand(eventInput));
+        }
     }
 }

@@ -1,7 +1,5 @@
-﻿using Automatonymous;
-using GraphQL.Types;
+﻿using GraphQL.Types;
 using MediatR;
-using Venu.Events.Commands;
 using Venu.Events.Commands.Dtos;
 using Venu.Events.GraphType.Types;
 
@@ -9,8 +7,11 @@ namespace Venu.Events.GraphType.Mutations
 {
     public class EventsMutation : ObjectGraphType
     {
+        private readonly Mutation _mutation;
         public EventsMutation(IMediator mediator)
         {
+            _mutation = new Mutation(mediator);
+            
             Name = "Mutation";
             Field<EventType>(
                 "createEvent",
@@ -19,14 +20,8 @@ namespace Venu.Events.GraphType.Mutations
                     ),
                 resolve: context =>
                 {
-                    var eventDraft = context.GetArgument<EventDraftDto>("event");
-                    var command = new CreateEventDraftCommand()
-                    {
-                        EventDraft = eventDraft
-                    };
-
-                    var result = mediator.Send(command);
-                    return result;
+                    var eventInput = context.GetArgument<EventInput>("event");
+                    return _mutation.CreateNewEvent(eventInput);
                 }
             );
         }

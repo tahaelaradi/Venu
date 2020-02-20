@@ -3,11 +3,13 @@ using Events.API.Setup;
 using GraphQL;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
+using GraphQL.Types;
 using MassTransit;
 using MassTransit.AspNetCoreIntegration;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -40,10 +42,10 @@ namespace Events.API
             services.AddControllers();
 
             services
-                .AddHealthChecks(_configuration)
                 .AddMongoDbContext(_configuration)
                 .AddMassTransit(_configuration)
-                .AddGraphTypes()
+                .AddGraphTypes()                
+                .AddHealthChecks(_configuration)
                 .AddMediatR(typeof(EventService));
         }
 
@@ -55,16 +57,17 @@ namespace Events.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            app.UseHttpsRedirection()
+                .UseRouting()
+                .UseAuthorization()
+                .UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllers();                
+                    endpoints.MapHealthChecks("/health");
+                });
 
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-            
-            app.UseGraphQL<EventsSchema>();
-            app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
+            app.UseGraphQL()
+            .UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
         }
     }
     
@@ -117,21 +120,28 @@ namespace Events.API
         
         public static IServiceCollection AddGraphTypes(this IServiceCollection services)
         {
-            services.AddScoped<IRepository, Repository>();
-            services.AddScoped<IMongoAccessor, Repository>();
-            
             services.AddScoped<EventType>();
             services.AddScoped<EventInputType>();
             services.AddScoped<EventsQuery>();
             services.AddScoped<EventsMutation>();
             services.AddScoped<EventsSchema>();
+
+            services.AddTransient<IRepository, Repository>();
+            services.AddTransient<IMongoAccessor, Repository>();
+
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
-            
+
             services.AddGraphQL(o => { o.ExposeExceptions = false; })
                 .AddGraphTypes(ServiceLifetime.Scoped)
                 .AddDataLoader();
             
             return services;
+        }
+
+        public static IApplicationBuilder UseGraphQL(this IApplicationBuilder app)
+        {
+            app.UseGraphQL<EventsSchema>(new PathString("/api/graphql"));
+            return app;
         }
     }
 }

@@ -5,7 +5,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Venu.Events.Commands;
-using Venu.Events.IntegrationEvents;
 using Venu.Events.Queries;
 
 namespace Venu.Events.Controllers
@@ -37,15 +36,9 @@ namespace Venu.Events.Controllers
         
         // POST api/events
         [HttpPost]
-        public async Task<ActionResult> PostDraft([FromBody] CreateEventDraftCommand request)
+        public async Task<ActionResult> PostDraft([FromBody] CreateEventCommand request)
         {
             var result = await _mediator.Send(request);
-            
-            await _bus.Publish<EventCreated>(new
-            {
-                Name = request.EventDraft.Name
-            });
-            
             return new JsonResult(result);
         }
     }

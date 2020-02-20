@@ -7,11 +7,15 @@ namespace Venu.Events.GraphType.Queries
 {
     public class EventsQuery : ObjectGraphType
     {
+        private readonly Query _query;
+
         public EventsQuery(IMediator mediator)
         {
+            _query = new Query(mediator);
+            
             Field<ListGraphType<EventType>>(
                 "events",
-                resolve: context => mediator.Send(new FindAllEventsQuery())
+                resolve: context => _query.GetEvents()
             );
         }
     }
