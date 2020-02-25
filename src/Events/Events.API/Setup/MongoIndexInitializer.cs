@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Venu.Events.Domain;
 
-namespace Events.API.Setup
+namespace Venu.Events.API.Setup
 {
     public class MongoIndexInitializer
     {

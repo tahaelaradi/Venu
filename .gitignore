@@ -4,6 +4,7 @@ obj/
 
 # editors
 *.swp
+*.DotSettings.user
 .idea/
 .vs/
 .vscode/

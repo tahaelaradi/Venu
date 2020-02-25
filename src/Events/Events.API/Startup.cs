@@ -1,9 +1,7 @@
 using System;
-using Events.API.Setup;
 using GraphQL;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
-using GraphQL.Types;
 using MassTransit;
 using MassTransit.AspNetCoreIntegration;
 using MediatR;
@@ -16,6 +14,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Venu.BuildingBlocks.Shared;
 using Venu.BuildingBlocks.Shared.Types;
+using Venu.Events.API.Setup;
 using Venu.Events.Common;
 using Venu.Events.DataAccess;
 using Venu.Events.Domain;
@@ -25,7 +24,7 @@ using Venu.Events.GraphType.Queries;
 using Venu.Events.GraphType.Types;
 using Venu.Events.Services;
 
-namespace Events.API
+namespace Venu.Events.API
 {
     public class Startup
     {
@@ -80,7 +79,7 @@ namespace Events.API
             hcBuilder.AddCheck("self", () => HealthCheckResult.Healthy());
 
             var rabbitMqUrl = configuration.GetOptions<RabbitMqOptions>("rabbitMQ").Url;
-            hcBuilder.AddRabbitMQ(rabbitMqUrl, name: "comnunication-rabbitmqbus-check", tags: new string[] { "rabbitmqbus" });
+            hcBuilder.AddRabbitMQ(rabbitMqUrl, name: "event-service-rabbitmqbus-check", tags: new string[] { "rabbitmqbus" });
 
             return services;
         }

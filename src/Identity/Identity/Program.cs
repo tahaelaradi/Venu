@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Venu.BuildingBlocks.Shared.Logging;
 
-namespace Venu.Events.API
+namespace Venu.Identity
 {
     public class Program
     {
@@ -13,10 +12,6 @@ namespace Venu.Events.API
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseLogging()
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>().UseKestrel(o => { o.AllowSynchronousIO = true; });
-                });
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }
 }
