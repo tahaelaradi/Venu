@@ -1,7 +1,7 @@
-using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,12 +21,15 @@ namespace Venu.ApiGateways.WebApiGateway
  
         public static IWebHost BuildWebHost(string[] args)
         {
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
+            var key = Encoding.ASCII.GetBytes("THIS_IS_A_RANDOM_SECRET_e03a00d0-5881-4267-9d41-fd948e04a35a");
             
             return WebHost.CreateDefaultBuilder(args)
                 .UseUrls("https://localhost:8001")
-                .ConfigureAppConfiguration(
-                    ic => ic.AddJsonFile("appsettings.json", true, true))
+                .ConfigureAppConfiguration(ic =>
+                {
+                    ic.AddJsonFile("appsettings.json", true, true)
+                        .AddJsonFile("ocelot.json");
+                })
                 .ConfigureServices(s =>
                 {
                     s.AddCors();
@@ -35,16 +38,23 @@ namespace Venu.ApiGateways.WebApiGateway
                             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                         })
-                        .AddJwtBearer(options =>
+                        .AddJwtBearer("IdentityApiKey", x =>
                         {
-                            options.Authority = "IdentityApiKey";
-                            options.RequireHttpsMetadata = false;
-                            options.Audience = "venu-web";
+                            x.RequireHttpsMetadata = false;
+                            x.SaveToken = true;
+                            x.TokenValidationParameters = new TokenValidationParameters
+                            {
+                                ValidateIssuerSigningKey = true,
+                                IssuerSigningKey = new SymmetricSecurityKey(key),
+                                ValidateIssuer = false,
+                                ValidateAudience = false
+                            };
                         });
                     s.AddOcelot();
                 })
                 .Configure(a =>
                 {
+                    a.UseAuthentication();
                     a.UseOcelot().Wait();
                 })
                 .UseSerilog((context, loggerConfiguration) =>

@@ -9,7 +9,7 @@ using Venu.Events.Queries;
 
 namespace Venu.Events.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class EventsController : ControllerBase
     {
@@ -26,7 +26,7 @@ namespace Venu.Events.Controllers
             _logger = logger;
         }
         
-        // GET api/events
+        // GET /events
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
@@ -34,7 +34,7 @@ namespace Venu.Events.Controllers
             return new JsonResult(result);
         }
         
-        // POST api/events
+        // POST /events
         [HttpPost]
         public async Task<ActionResult> PostDraft([FromBody] CreateEventCommand request)
         {

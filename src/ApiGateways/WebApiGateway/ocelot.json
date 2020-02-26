@@ -1,0 +1,88 @@
+﻿{
+  "ReRoutes": [
+    {
+      "UpstreamPathTemplate": "/api/users/authenticate",
+      "UpstreamHttpMethod": [
+        "POST"
+      ],
+      "DownstreamPathTemplate": "/users/authenticate",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44309
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/users/register",
+      "UpstreamHttpMethod": [
+        "POST"
+      ],
+      "DownstreamPathTemplate": "/users/register",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44309
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/users/{userId}",
+      "UpstreamHttpMethod": [
+        "GET", "PUT", "DELETE"
+      ],
+      "DownstreamPathTemplate": "/users/{userId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44309
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/events",
+      "UpstreamHttpMethod": [
+        "POST", "GET"
+      ],
+      "DownstreamPathTemplate": "/events",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44386
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/events/gql",
+      "UpstreamHttpMethod": [
+        "POST"
+      ],
+      "DownstreamPathTemplate": "/api/graphql",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44386
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/events/{everything}",
+      "UpstreamHttpMethod": [
+        "PUT", "GET", "DELETE"
+      ],
+      "DownstreamPathTemplate": "/events/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44386
+        }
+      ]
+    }
+  ]
+}

@@ -1,14 +1,9 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using Venu.Identity.Domain;
 using Venu.Identity.Dtos;
+using Venu.Identity.Entities;
 using Venu.Identity.Helpers;
 using Venu.Identity.Services;
 
@@ -21,45 +16,25 @@ namespace Venu.Identity.Controllers
     {
         private IUserService _userService;
         private IMapper _mapper;
-        private readonly AppSettings _appSettings;
 
         public UsersController(
             IUserService userService,
-            IMapper mapper,
-            IOptions<AppSettings> appSettings)
+            IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;
-            _appSettings = appSettings.Value;
         }
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]AuthenticateUserDto authenticateUserDto)
         {
-            var user = _userService.Authenticate(authenticateUserDto.Username, authenticateUserDto.Password);
+            var token = _userService.Authenticate(authenticateUserDto.Username, authenticateUserDto.Password);
 
-            if (user == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
-            
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-            
-            var userDto = _mapper.Map<UserDto>(user);
-            userDto.Token = tokenString;
+            if (token == null)
+                return BadRequest(new {message = "Username of password incorrect"});
 
-            return Ok(userDto);
+            return Ok(new {Token = token});
         }
         
         [AllowAnonymous]
@@ -79,6 +54,7 @@ namespace Venu.Identity.Controllers
             }
         }
         
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -103,6 +79,7 @@ namespace Venu.Identity.Controllers
             }
         }
         
+        [Authorize(Roles = Role.Admin)]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
