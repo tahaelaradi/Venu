@@ -32,7 +32,14 @@ namespace Venu.ApiGateways.WebApiGateway
                 })
                 .ConfigureServices(s =>
                 {
-                    s.AddCors();
+                    s.AddCors(options =>
+                    {
+                        options.AddPolicy("CorsPolicy",
+                            builder => builder.WithOrigins("http://localhost:3000")
+                                .AllowAnyMethod()
+                                .AllowAnyHeader()
+                                .AllowCredentials());
+                    });
                     s.AddAuthentication(options =>
                         {
                             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -55,6 +62,7 @@ namespace Venu.ApiGateways.WebApiGateway
                 .Configure(a =>
                 {
                     a.UseAuthentication();
+                    a.UseCors("CorsPolicy");
                     a.UseOcelot().Wait();
                 })
                 .UseSerilog((context, loggerConfiguration) =>
