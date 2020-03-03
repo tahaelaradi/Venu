@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const GET_EVENTS = gql`
   query {
@@ -8,4 +8,3 @@ export const GET_EVENTS = gql`
     }
   }
 `;
-
