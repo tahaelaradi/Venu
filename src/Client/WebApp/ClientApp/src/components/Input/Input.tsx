@@ -1,10 +1,10 @@
-import React from 'react';
-import { Input as BaseInput, SIZE } from 'baseui/input';
+import React from "react";
+import { Input as BaseInput, SIZE } from "baseui/input";
 
 const getInputFontStyle = ({ $theme }) => {
   return {
     color: $theme.colors.textDark,
-    ...$theme.typography.fontBold14,
+    ...$theme.typography.fontBold14
   };
 };
 
@@ -15,10 +15,10 @@ const Input = ({ ...props }) => {
         Input: {
           style: ({ $theme }) => {
             return {
-              ...getInputFontStyle({ $theme }),
+              ...getInputFontStyle({ $theme })
             };
-          },
-        },
+          }
+        }
       }}
       {...props}
     />

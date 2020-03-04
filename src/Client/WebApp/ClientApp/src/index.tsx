@@ -1,30 +1,36 @@
-import "bootstrap/dist/css/bootstrap.css";
-
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import { ConnectedRouter } from "connected-react-router";
-import { createBrowserHistory } from "history";
-import configureStore from "./store/configureStore";
-import App from "./App";
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+import { Client as Styletron } from "styletron-engine-atomic";
+import { Provider as StyletronProvider } from "styletron-react";
+import { BaseProvider } from "baseui";
+import { ApolloProvider } from "@apollo/react-hooks";
+import { theme } from "./theme";
+import Routes from "./routes";
+import ApolloClient from "apollo-boost";
 import registerServiceWorker from "./registerServiceWorker";
+import { GlobalStyle } from "./styled/global.style";
 
-// Create browser history to use in the Redux store
-const baseUrl = document
-  .getElementsByTagName("base")[0]
-  .getAttribute("href") as string;
-const history = createBrowserHistory({ basename: baseUrl });
+const client = new ApolloClient({
+  uri: process.env.VENU_API_URL
+});
 
-// Get the application-wide store instance, prepopulating with state from the server where available.
-const store = configureStore(history);
+function App() {
+  const engine = new Styletron();
 
-ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <App />
-    </ConnectedRouter>
-  </Provider>,
-  document.getElementById("root")
-);
+  return (
+    <ApolloProvider client={client as any}>
+      <StyletronProvider value={engine}>
+        <BaseProvider theme={theme}>
+          <BrowserRouter>
+            <GlobalStyle />
+            <Routes />
+          </BrowserRouter>
+        </BaseProvider>
+      </StyletronProvider>
+    </ApolloProvider>
+  );
+}
 
+ReactDOM.render(<App />, document.getElementById("root"));
 registerServiceWorker();

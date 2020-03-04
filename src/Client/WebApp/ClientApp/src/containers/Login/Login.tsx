@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Redirect, useHistory, useLocation } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { AuthContext } from "../../context/auth";
+import { AuthContext } from "../../contexts/auth";
 import {
   FormFields,
   FormLabel,
@@ -51,7 +51,7 @@ export default () => {
             <Form>
               <FormFields>
                 <LogoWrapper></LogoWrapper>
-                <FormTitle>Log in to admin</FormTitle>
+                <FormTitle>LOG IN</FormTitle>
               </FormFields>
 
               <FormFields>
@@ -60,7 +60,7 @@ export default () => {
                   type="email"
                   name="username"
                   component={MyInput}
-                  placeholder="Ex: demo@demo.com"
+                  placeholder="example@email.com"
                 />
                 {errors.username && touched.username && (
                   <Error>{errors.username}</Error>
@@ -72,7 +72,7 @@ export default () => {
                   type="password"
                   name="password"
                   component={MyInput}
-                  placeholder="Ex: demo"
+                  placeholder=""
                 />
                 {errors.password && touched.password && (
                   <Error>{errors.password}</Error>
