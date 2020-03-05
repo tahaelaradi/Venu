@@ -33,7 +33,7 @@ const NavLink: React.SFC<NavLinkProps> = ({
   return (
     <div onClick={onClick} className={className ? className : ""}>
       <Link to={href}>
-        <a
+        <div
           /*className={pathname === href ? ' current-page' : ''}*/
           style={{ display: "flex", alignItems: "center" }}
         >
@@ -49,7 +49,7 @@ const NavLink: React.SFC<NavLinkProps> = ({
               label
             )}
           </span>
-        </a>
+        </div>
       </Link>
     </div>
   );

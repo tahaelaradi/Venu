@@ -127,6 +127,11 @@ const HeaderWrapper = styled.header`
 
           .menu-item-icon {
             margin-right: 15px;
+            
+            svg {
+              width="3em";
+              height="3em";
+            }
           }
         }
       }
@@ -291,6 +296,104 @@ export const SelectedType = styled.button`
 export const DropDownArrow = styled.span`
   width: 12px;
   margin-left: 16px;
+`;
+
+export const SelectedLang = styled.button`
+  width: auto;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  background-color: ${themeGet("colors.white", "#ffffff")};
+  border: 1px solid ${themeGet("colors.borderColor", "#f1f1f1")};
+  padding-top: 0;
+  padding-bottom: 0;
+  border-radius: ${themeGet("radius.3", "6")}px;
+  outline: 0;
+
+  span {
+    display: flex;
+    align-items: center;
+    font-family: "Lato", sans-serif;
+    font-size: ${themeGet("fontSizes.2", "15")}px;
+    font-weight: ${themeGet("fontWeights.6", "700")};
+    color: ${themeGet("colors.primary", "#009E7F")};
+    text-decoration: none;
+
+    &:first-child {
+      margin-right: auto;
+    }
+  }
+`;
+
+export const LanguageItem = styled.button`
+  width: 100%;
+  font-size: 15px;
+  font-weight: 700;
+  color: ${themeGet("colors.darkBold", "#0D1136")};
+  line-height: 1.2em;
+  display: block;
+  padding: 15px 30px;
+  border-radius: 6px;
+  transition: 0.15s ease-in-out;
+  display: flex;
+  align-items: center;
+  border: 0;
+  border-bottom: 1px solid ${themeGet("colors.borderColor", "#f1f1f1")};
+  border-radius: 0;
+  background-color: transparent;
+  outline: 0;
+  cursor: pointer;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  @media (max-width: 1400px) {
+    margin-right: 10px;
+    font-size: 15px;
+  }
+
+  @media only screen and (min-width: 991px) and (max-width: 1200px) {
+    padding: 15px 30px;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-right: 15px;
+
+    svg {
+      display: block;
+      width: 20px;
+      height: auto;
+    }
+  }
+`;
+
+export const LangSwithcer = styled.div`
+  margin-right: 20px;
+
+  .popover-wrapper.right {
+    .popover-content {
+      padding: 15px 0;
+    }
+  }
+`;
+
+export const Flag = styled.div`
+  margin: 0px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  overflow: hidden;
+  svg {
+    width: 20px;
+    height: auto;
+  }
 `;
 
 export default HeaderWrapper;

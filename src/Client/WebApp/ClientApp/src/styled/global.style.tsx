@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
 const TIMEOUT = 400;
 
@@ -126,4 +126,12 @@ export const GlobalStyle = createGlobalStyle`
     border: 0;
   }
 
+`;
+
+export const InjectRTL = styled.div`
+  ${({ lang }) =>
+  (lang === 'ar') &&
+  `
+    font-family: 'Cairo', sans-serif;
+    `}
 `;

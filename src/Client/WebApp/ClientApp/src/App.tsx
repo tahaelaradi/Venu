@@ -1,30 +1,36 @@
 import * as React from "react";
-import Routes from "./routes";
-import { ThemeProvider } from 'styled-components';
-import { theme } from './theme';
-import ApolloClient from "apollo-client";
-import { ApolloProvider } from "@apollo/react-hooks";
-import {HttpLink} from "apollo-link-http";
-import {InMemoryCache} from "apollo-cache-inmemory";
+import { ThemeProvider } from "styled-components";
+import LanguageProvider from "./contexts/language/language.provider";
+import { StickyProvider } from "./contexts/app/app.provider";
 
-const BASE_URL = "https://localhost:8001/api/events/gql";
+import AppLayout from "./containers/LayoutContainer/AppLayout";
+import { GlobalStyle } from "./styled/global.style";
+import { useDeviceType } from "./helpers/useDeviceType";
+import { theme } from "./theme";
 
-function createApolloClient(initialState = {}) {
-  return new ApolloClient({
-    link: new HttpLink({
-      uri: BASE_URL,
-      credentials: 'same-origin',
-    }),
-    cache: new InMemoryCache().restore(initialState),
-  });
+// Language translation files
+import localEn from "./data/translation/en.json";
+import localAr from "./data/translation/ar.json";
+import localEs from "./data/translation/es.json";
+
+// Language translation Config
+const messages = {
+  en: localEn,
+  ar: localAr,
+  es: localEs
+};
+
+export default function App(props: any) {
+  const deviceType = useDeviceType();
+
+  return (
+    <ThemeProvider theme={theme}>
+      <LanguageProvider messages={messages}>
+        <StickyProvider>
+          <AppLayout deviceType={deviceType}>{props.childern}</AppLayout>
+          <GlobalStyle />
+        </StickyProvider>
+      </LanguageProvider>
+    </ThemeProvider>
+  );
 }
-
-const client = createApolloClient();
-
-export default () => (
-  <ThemeProvider theme={theme}>
-    <ApolloProvider client={client as any}>
-      <Routes />
-    </ApolloProvider>
-  </ThemeProvider>
-);

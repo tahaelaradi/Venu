@@ -1,21 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
+import registerServiceWorker from "./registerServiceWorker";
+
 import { Client as Styletron } from "styletron-engine-atomic";
 import { Provider as StyletronProvider } from "styletron-react";
+import ApolloClient from "apollo-boost";
 import { BaseProvider } from "baseui";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { theme } from "./theme";
+import App from "./App";
 import Routes from "./routes";
-import ApolloClient from "apollo-boost";
-import registerServiceWorker from "./registerServiceWorker";
-import { GlobalStyle } from "./styled/global.style";
 
 const client = new ApolloClient({
   uri: process.env.VENU_API_URL
 });
 
-function App() {
+function Index() {
   const engine = new Styletron();
 
   return (
@@ -23,8 +24,9 @@ function App() {
       <StyletronProvider value={engine}>
         <BaseProvider theme={theme}>
           <BrowserRouter>
-            <GlobalStyle />
-            <Routes />
+            <App>
+              <Routes />
+            </App>
           </BrowserRouter>
         </BaseProvider>
       </StyletronProvider>
@@ -32,5 +34,5 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<Index />, document.getElementById("root"));
 registerServiceWorker();

@@ -43,11 +43,7 @@ const Layout: FunctionComponent<LayoutProps> = ({
 
       {desktop && (
         <Sticky enabled={isSticky} innerZ={1001}>
-          <Header
-            className={`${isSticky ? "sticky" : "unSticky"}`}
-            token={token}
-            pathname={"/"}
-          />
+          <Header className={`${isSticky ? "sticky" : "unSticky"}`} />
         </Sticky>
       )}
       {children}
