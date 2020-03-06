@@ -1,5 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import { withRouter, useHistory } from "react-router-dom";
+import { RouteComponentProps } from "react-router";
 import LanguageContext from "../../../contexts/language/language.context";
+import { SearchContext } from "../../../contexts/search/search.context";
 
 import { Link } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -23,8 +26,9 @@ import HeaderWrapper, {
 import { Icons, routes } from "../../../constants/";
 import UserImage from "../../../image/user.jpg";
 import { AuthContext } from "../../../contexts/auth";
+import Search from "../../../components/SearchBox/SearchBox";
 
-type HeaderProps = {
+type HeaderProps = RouteComponentProps & {
   style?: any;
   className?: string;
 };
@@ -67,14 +71,46 @@ const LanguageArray = [
   }
 ];
 
-const Header: React.FC<HeaderProps> = ({ style, className }) => {
+const Header: React.FC<HeaderProps> = (props, { style, className }) => {
   const { isAuthenticated } = useContext(AuthContext);
-
+  const { state, dispatch } = useContext(SearchContext);
   const {
     state: { lang },
     toggleLanguage
   } = useContext<any>(LanguageContext);
+  const [activeMenu, setActiveMenu] = useState({
+    link: "",
+    icon: "",
+    label: ""
+  });
+
   const selectedLangindex = LanguageArray.findIndex(x => x.id === lang);
+
+  const { text } = state;
+
+  const handleSearch = (text: any) => {
+    dispatch({
+      type: "UPDATE",
+      payload: {
+        ...state,
+        text
+      }
+    });
+  };
+
+  const { page, ...urlState } = state;
+
+  const handleClickSearchButton = () => {
+    // TODO: Add value to search query
+    props.history.push(`/search?text=`);
+  };
+
+  const resetSearch = (selectedMenu: any) => {
+    setActiveMenu(selectedMenu);
+    dispatch({
+      type: "RESET"
+    });
+  };
 
   const handleLogout = () => {
     if (typeof window !== "undefined") {
@@ -158,6 +194,15 @@ const Header: React.FC<HeaderProps> = ({ style, className }) => {
           />
         </MainMenu>
       </HeaderLeftSide>
+      <Search
+        className="headerSearch"
+        handleSearch={(value: any) => handleSearch(value)}
+        onClick={handleClickSearchButton}
+        placeholder="Search..."
+        showSvg={true}
+        style={{ width: "100%" }}
+        value={text || ""}
+      />
       <HeaderRightSide>
         <NavLink className="menu-item" href={routes.HOME_PAGE} label="Browse" />
         <LangSwithcer>
@@ -211,4 +256,4 @@ const Header: React.FC<HeaderProps> = ({ style, className }) => {
   );
 };
 
-export default Header;
+export default withRouter(Header);

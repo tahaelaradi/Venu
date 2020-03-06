@@ -1,6 +1,14 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
+import WebFont from 'webfontloader';
+
 const TIMEOUT = 400;
+
+WebFont.load({
+  google: {
+    families: ['Source Sans Pro', 'sans-serif']
+  }
+});
 
 export const GlobalStyle = createGlobalStyle`
   html {

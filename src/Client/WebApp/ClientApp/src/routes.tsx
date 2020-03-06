@@ -37,22 +37,22 @@ const Routes = () => {
   const deviceType = useDeviceType();
 
   return (
-      <AuthProvider>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Switch>
-            <Route exact path={routes.HOME_PAGE}>
-              <HomePage deviceType={deviceType} />
-            </Route>
-            <PrivateRoute path={routes.ACCOUNT_PAGE}>
-              <div>Private Page...</div>
-            </PrivateRoute>
-            <Route path={routes.LOGIN}>
-              <Login />
-            </Route>
-            <Route component={NotFound} />
-          </Switch>
-        </Suspense>
-      </AuthProvider>
+    <AuthProvider>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          <Route exact path={routes.HOME_PAGE}>
+            <HomePage deviceType={deviceType} />
+          </Route>
+          <PrivateRoute path={routes.ACCOUNT_PAGE}>
+            <div>Private Page...</div>
+          </PrivateRoute>
+          <Route path={routes.LOGIN}>
+            <Login />
+          </Route>
+          <Route component={NotFound} />
+        </Switch>
+      </Suspense>
+    </AuthProvider>
   );
 };
 

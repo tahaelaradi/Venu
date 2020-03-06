@@ -10,7 +10,6 @@ import { BaseProvider } from "baseui";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { theme } from "./theme";
 import App from "./App";
-import Routes from "./routes";
 
 const client = new ApolloClient({
   uri: process.env.VENU_API_URL
@@ -24,9 +23,7 @@ function Index() {
       <StyletronProvider value={engine}>
         <BaseProvider theme={theme}>
           <BrowserRouter>
-            <App>
-              <Routes />
-            </App>
+            <App />
           </BrowserRouter>
         </BaseProvider>
       </StyletronProvider>

@@ -34,6 +34,7 @@
     "styletron-engine-atomic": "^1.4.6",
     "styletron-react": "^5.2.7",
     "stylis-plugin-rtl": "^1.0.0",
+    "webfontloader": "^1.6.28",
     "yup": "^0.28.1"
   },
   "devDependencies": {

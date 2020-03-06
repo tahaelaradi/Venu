@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ThemeProvider } from "styled-components";
 import LanguageProvider from "./contexts/language/language.provider";
+import { SearchProvider } from "./contexts/search/search.provider";
 import { StickyProvider } from "./contexts/app/app.provider";
 
 import AppLayout from "./containers/LayoutContainer/AppLayout";
@@ -12,6 +13,7 @@ import { theme } from "./theme";
 import localEn from "./data/translation/en.json";
 import localAr from "./data/translation/ar.json";
 import localEs from "./data/translation/es.json";
+import Routes from "./routes";
 
 // Language translation Config
 const messages = {
@@ -26,10 +28,14 @@ export default function App(props: any) {
   return (
     <ThemeProvider theme={theme}>
       <LanguageProvider messages={messages}>
-        <StickyProvider>
-          <AppLayout deviceType={deviceType}>{props.childern}</AppLayout>
-          <GlobalStyle />
-        </StickyProvider>
+        <SearchProvider query={props.query}>
+          <StickyProvider>
+            <AppLayout deviceType={deviceType}>
+              <Routes />
+            </AppLayout>
+            <GlobalStyle />
+          </StickyProvider>
+        </SearchProvider>
       </LanguageProvider>
     </ThemeProvider>
   );

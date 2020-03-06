@@ -3,118 +3,118 @@ import { createTheme, lightThemePrimitives } from "baseui";
 export const theme = createTheme(
   {
     ...lightThemePrimitives,
-    primaryFontFamily: "'Lato', sans-serif",
-    primary: "#00C58D",
+    primaryFontFamily: "'Source Sans Pro', sans-serif",
+    primary: "#EA5A47",
     primary700: "#00bd87"
   },
   {
     name: "custom-typography",
     typography: {
-      primaryFontFamily: "'Lato', sans-serif",
+      primaryFontFamily: "'Source Sans Pro', sans-serif",
       font11: {
-        fontFamily: "'Lato', sans-serif",
+        fontFamily: "'Source Sans Pro', sans-serif",
         fontSize: "11px",
         fontWeight: 400,
         lineHeight: 1.5
       },
       fontBold11: {
-        fontFamily: "'Lato', sans-serif",
+        fontFamily: "'Source Sans Pro', sans-serif",
         fontSize: "11px",
         fontWeight: 700,
         lineHeight: 1.5
       },
       font12: {
-        fontFamily: "'Lato', sans-serif",
+        fontFamily: "'Source Sans Pro', sans-serif",
         fontSize: "12px",
         fontWeight: 400,
         lineHeight: 1.5
       },
       fontBold12: {
-        fontFamily: "'Lato', sans-serif",
+        fontFamily: "'Source Sans Pro', sans-serif",
         fontSize: "12px",
         fontWeight: 700,
         lineHeight: 1.5
       },
       font13: {
-        fontFamily: "'Lato', sans-serif",
+        fontFamily: "'Source Sans Pro', sans-serif",
         fontSize: "13px",
         fontWeight: 400,
         lineHeight: 1.5
       },
       fontBold13: {
-        fontFamily: "'Lato', sans-serif",
+        fontFamily: "'Source Sans Pro', sans-serif",
         fontSize: "13px",
         fontWeight: 700,
         lineHeight: 1.5
       },
       font14: {
-        fontFamily: "'Lato', sans-serif",
+        fontFamily: "'Source Sans Pro', sans-serif",
         fontSize: "14px",
         fontWeight: 400,
         lineHeight: 1.5
       },
       fontBold14: {
-        fontFamily: "'Lato', sans-serif",
+        fontFamily: "'Source Sans Pro', sans-serif",
         fontSize: "14px",
         fontWeight: 700,
         lineHeight: 1.5
       },
       font16: {
-        fontFamily: "'Lato', sans-serif",
+        fontFamily: "'Source Sans Pro', sans-serif",
         fontSize: "16px",
         fontWeight: 400,
         lineHeight: 1.5
       },
       fontBold16: {
-        fontFamily: "'Lato', sans-serif",
+        fontFamily: "'Source Sans Pro', sans-serif",
         fontSize: "16px",
         fontWeight: 700,
         lineHeight: 1.5
       },
       font18: {
-        fontFamily: "'Lato', sans-serif",
+        fontFamily: "'Source Sans Pro', sans-serif",
         fontSize: "18px",
         fontWeight: 400,
         lineHeight: 1.5
       },
       fontBold18: {
-        fontFamily: "'Lato', sans-serif",
+        fontFamily: "'Source Sans Pro', sans-serif",
         fontSize: "18px",
         fontWeight: 700,
         lineHeight: 1.5
       },
       font21: {
-        fontFamily: "'Lato', sans-serif",
+        fontFamily: "'Source Sans Pro', sans-serif",
         fontSize: "21px",
         fontWeight: 400,
         lineHeight: 1.5
       },
       fontBold21: {
-        fontFamily: "'Lato', sans-serif",
+        fontFamily: "'Source Sans Pro', sans-serif",
         fontSize: "21px",
         fontWeight: 700,
         lineHeight: 1.5
       },
       font24: {
-        fontFamily: "'Lato', sans-serif",
+        fontFamily: "'Source Sans Pro', sans-serif",
         fontSize: "24px",
         fontWeight: 400,
         lineHeight: 1.5
       },
       fontBold24: {
-        fontFamily: "'Lato', sans-serif",
+        fontFamily: "'Source Sans Pro', sans-serif",
         fontSize: "24px",
         fontWeight: 700,
         lineHeight: 1.5
       },
       font30: {
-        fontFamily: "'Lato', sans-serif",
+        fontFamily: "'Source Sans Pro', sans-serif",
         fontSize: "30px",
         fontWeight: 400,
         lineHeight: 1.5
       },
       fontBold30: {
-        fontFamily: "'Lato', sans-serif",
+        fontFamily: "'Source Sans Pro', sans-serif",
         fontSize: "30px",
         fontWeight: 700,
         lineHeight: 1.5
@@ -146,7 +146,7 @@ export const theme = createTheme(
       }
     },
     colors: {
-      primary: "#00C58D",
+      primary: "#EA5A47",
       primary700: "#00bd87",
       primary400: "#03D3B5",
       red400: "#FC5C63",

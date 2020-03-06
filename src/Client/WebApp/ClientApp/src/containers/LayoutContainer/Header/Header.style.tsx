@@ -70,7 +70,6 @@ const HeaderWrapper = styled.header`
     animation: ${positionAnim} 0.3s ease;
     .headerSearch {
       animation: ${hideSearch} 0.3s ease;
-      display: none;
     }
   }
 
@@ -176,9 +175,9 @@ export const HeaderRightSide = styled.div`
 
   .menu-item {
     a {
-      font-family: "Lato", sans-serif;
+      font-family: "Source Sans Pro", sans-serif;
       font-size: ${themeGet("fontSizes.2", "15")}px;
-      font-weight: ${themeGet("fontWeights.6", "700")};
+      font-weight: ${themeGet("fontWeights.6", "500")};
       color: ${themeGet("colors.darkBold", "#0D1136")};
       line-height: 1.2em;
       display: block;
@@ -229,10 +228,10 @@ export const MainMenu = styled.div`
   .popover-wrapper {
     .popover-content {
       .menu-item {
-        font-family: "Lato", sans-serif;
+        font-family: "Source Sans Pro", sans-serif;
         a {
           font-size: 15px;
-          font-weight: 700;
+          font-weight: 500;
           color: ${themeGet("colors.darkBold", "#0D1136")};
           line-height: 1.2em;
           display: block;
@@ -281,9 +280,9 @@ export const SelectedType = styled.button`
   span {
     display: flex;
     align-items: center;
-    font-family: "Lato", sans-serif;
+    font-family: "Source Sans Pro", sans-serif;
     font-size: ${themeGet("fontSizes.2", "15")}px;
-    font-weight: ${themeGet("fontWeights.6", "700")};
+    font-weight: ${themeGet("fontWeights.6", "500")};
     color: ${themeGet("colors.primary", "#009E7F")};
     text-decoration: none;
 
@@ -313,9 +312,9 @@ export const SelectedLang = styled.button`
   span {
     display: flex;
     align-items: center;
-    font-family: "Lato", sans-serif;
+    font-family: "Source Sans Pro", sans-serif;
     font-size: ${themeGet("fontSizes.2", "15")}px;
-    font-weight: ${themeGet("fontWeights.6", "700")};
+    font-weight: ${themeGet("fontWeights.6", "500")};
     color: ${themeGet("colors.primary", "#009E7F")};
     text-decoration: none;
 
@@ -328,7 +327,7 @@ export const SelectedLang = styled.button`
 export const LanguageItem = styled.button`
   width: 100%;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 500;
   color: ${themeGet("colors.darkBold", "#0D1136")};
   line-height: 1.2em;
   display: block;
