@@ -1,44 +1,78 @@
-import { SIZE, SHAPE } from "baseui/button";
+import styled from "styled-components";
+import { themeGet } from "@styled-system/theme-get";
 
-export const getPaddingStyles = ({ $theme, $size }) => {
-  switch ($size) {
-    case SIZE.compact:
-      return {
-        paddingLeft: $theme.sizing.scale25,
-        paddingRight: $theme.sizing.scale25
-      };
-    case SIZE.large:
-      return {
-        paddingLeft: $theme.sizing.scale25,
-        paddingRight: $theme.sizing.scale25
-      };
-    default:
-      return {
-        paddingLeft: $theme.sizing.scale25,
-        paddingRight: $theme.sizing.scale25
-      };
-  }
+type ButtonStyleProps = {
+  fullwidth?: boolean;
+  colors?: "primary" | "secondary";
 };
 
-export const getBorderRadiiStyles = ({ $theme, $size, $shape }) => {
-  let value = $theme.buttonBorderRadius;
+const ButtonStyle = styled("button")<ButtonStyleProps>`
+  /* button default style */
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${themeGet("colors.primary", "#009E7F")};
+  height: ${themeGet("heights.3", "38")}px;
+  width: ${props => (props.fullwidth ? "100%" : "auto")};
+  color: "#ffffff";
+  border-radius: ${props =>
+    props.radius ? props.radius : themeGet("radius.3", "6")}px;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: ${themeGet("fontSizes.2", "15")}px;
+  font-weight: ${themeGet("fontWeights.6", "700")};
+  text-decoration: none;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: ${themeGet("space.7", "30")}px;
+  padding-right: ${themeGet("space.7", "30")}px;
+  border: 0;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 
-  if ($shape === SHAPE.pill) {
-    if ($size === SIZE.compact) {
-      value = "30px";
-    } else if ($size === SIZE.large) {
-      value = "42px";
-    } else {
-      value = "38px";
+  span.btn-text {
+    padding-left: ${themeGet("space.1", "4")}px;
+    padding-right: ${themeGet("space.1", "4")}px;
+    white-space: nowrap;
+  }
+  span.btn-icon {
+    display: flex;
+    > div {
+      display: flex !important;
     }
-  } else if ($shape === SHAPE.round) {
-    value = "50%";
   }
 
-  return {
-    borderTopRightRadius: value,
-    borderBottomRightRadius: value,
-    borderTopLeftRadius: value,
-    borderBottomLeftRadius: value
-  };
-};
+  &:focus {
+    outline: none;
+  }
+
+  &.disabled {
+    color: ${themeGet("colors.labelColor", "#767676")};
+    background-color: ${themeGet("colors.borderColor", "#E6E6E6")};
+    border-color: ${themeGet("colors.borderColor", "#E6E6E6")};
+
+    &:hover {
+      color: ${themeGet("colors.labelColor", "#767676")};
+      background-color: ${themeGet("colors.borderColor", "#E6E6E6")};
+      border-color: ${themeGet("colors.borderColor", "#E6E6E6")};
+    }
+  }
+
+  /* Material style goes here */
+  &.is-material {
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2),
+      0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+  }
+
+  /* When button on loading stage */
+  &.is-loading {
+    .btn-text {
+      padding-left: ${themeGet("space.2", "8")}px;
+      padding-right: ${themeGet("space.2", "8")}px;
+    }
+  }
+`;
+
+ButtonStyle.displayName = "ButtonStyle";
+
+export default ButtonStyle;

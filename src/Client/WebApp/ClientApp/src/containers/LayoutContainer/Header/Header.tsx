@@ -1,12 +1,13 @@
 import React, { useContext, useState } from "react";
-import { withRouter, useHistory } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { RouteComponentProps } from "react-router";
-import LanguageContext from "../../../contexts/language/language.context";
-import { SearchContext } from "../../../contexts/search/search.context";
-
-import { Link } from "react-router-dom";
+import { openModal } from "@redq/reuse-modal";
 import { FormattedMessage } from "react-intl";
 import { Icon } from "@iconify/react";
+
+import { AuthContext } from "../../../contexts/auth/auth.context";
+import LanguageContext from "../../../contexts/language/language.context";
+import { SearchContext } from "../../../contexts/search/search.context";
 
 import NavLink from "../../../components/NavLink/NavLink";
 import Popover from "../../../components/Popover/Popover";
@@ -25,8 +26,8 @@ import HeaderWrapper, {
 
 import { Icons, routes } from "../../../constants/";
 import UserImage from "../../../image/user.jpg";
-import { AuthContext } from "../../../contexts/auth";
 import Search from "../../../components/SearchBox/SearchBox";
+import AuthenticationForm from "../../SignInOutForm/Form";
 
 type HeaderProps = RouteComponentProps & {
   style?: any;
@@ -71,9 +72,18 @@ const LanguageArray = [
   }
 ];
 
-const Header: React.FC<HeaderProps> = (props, { style, className }) => {
-  const { isAuthenticated } = useContext(AuthContext);
+const Header: React.FC<HeaderProps> = (
+  props,
+  { style, className },
+  ...rest
+) => {
+  const {
+    authState: { isAuthenticated },
+    authDispatch
+  } = useContext<any>(AuthContext);
+
   const { state, dispatch } = useContext(SearchContext);
+
   const {
     state: { lang },
     toggleLanguage
@@ -87,6 +97,27 @@ const Header: React.FC<HeaderProps> = (props, { style, className }) => {
   const selectedLangindex = LanguageArray.findIndex(x => x.id === lang);
 
   const { text } = state;
+
+  const signInOutForm = () => {
+    authDispatch({
+      type: "SIGNIN"
+    });
+
+    openModal({
+      show: true,
+      overlayClassName: "quick-view-overlay",
+      closeOnClickOutside: true,
+      component: AuthenticationForm,
+      closeComponent: "",
+      config: {
+        enableResizing: false,
+        disableDragging: true,
+        className: "quick-view-modal",
+        width: 458,
+        height: "auto"
+      }
+    });
+  };
 
   const handleSearch = (text: any) => {
     dispatch({
@@ -114,8 +145,9 @@ const Header: React.FC<HeaderProps> = (props, { style, className }) => {
 
   const handleLogout = () => {
     if (typeof window !== "undefined") {
-      localStorage.removeItem("access_token");
-      // authDispatch({ type: 'SIGN_OUT' });
+      localStorage.removeItem("venu_token");
+      authDispatch({ type: "SIGN_OUT" });
+      props.history.push("/");
     }
   };
 
@@ -224,9 +256,9 @@ const Header: React.FC<HeaderProps> = (props, { style, className }) => {
         </LangSwithcer>
         {!isAuthenticated ? (
           <Button
-            // onClick={signInOutForm}
+            onClick={signInOutForm}
             size="small"
-            title="Log in"
+            title="Sign In"
             style={{ fontSize: 15, color: "#fff" }}
             intlButtonId="joinButton"
           />
@@ -246,7 +278,16 @@ const Header: React.FC<HeaderProps> = (props, { style, className }) => {
                     intlId={item.intlId}
                   />
                 ))}
-                <div className="menu-item" onClick={handleLogout} />
+                <div className="menu-item" onClick={handleLogout}>
+                  <a>
+                    <span>
+                      <FormattedMessage
+                        id="navlinkLogout"
+                        defaultMessage="Logout"
+                      />
+                    </span>
+                  </a>
+                </div>
               </>
             }
           />

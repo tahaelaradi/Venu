@@ -120,7 +120,7 @@ export const SearchButton = styled.button`
   font-weight: 700;
   color: #ffffff;
   display: flex;
-  height: 48px;
+  height: 38px;
   align-items: center;
   border: 0;
   outline: 0;

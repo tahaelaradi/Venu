@@ -22,9 +22,7 @@ function Index() {
     <ApolloProvider client={client as any}>
       <StyletronProvider value={engine}>
         <BaseProvider theme={theme}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
+          <App />
         </BaseProvider>
       </StyletronProvider>
     </ApolloProvider>
