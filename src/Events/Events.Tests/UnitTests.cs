@@ -2,8 +2,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MassTransit.Testing;
 using NUnit.Framework;
-using Venu.Events.IntegrationEvents;
-using Venu.Events.IntegrationHandlers;
+using Venu.Events.API.IntegrationEvents;
+using Venu.Events.API.IntegrationHandlers;
 
 namespace Events.Tests
 {

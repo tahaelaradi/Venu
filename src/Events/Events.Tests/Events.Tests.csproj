@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Events.API\Events.API.csproj" />
       <ProjectReference Include="..\Events\Events.csproj" />
     </ItemGroup>
 
