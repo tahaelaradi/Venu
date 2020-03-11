@@ -15,14 +15,14 @@ using Microsoft.Extensions.Hosting;
 using Venu.BuildingBlocks.Shared;
 using Venu.BuildingBlocks.Shared.Types;
 using Venu.Events.API.Setup;
-using Venu.Events.Common;
-using Venu.Events.DataAccess;
-using Venu.Events.Domain;
-using Venu.Events.GraphType.AppSchema;
-using Venu.Events.GraphType.Mutations;
-using Venu.Events.GraphType.Queries;
-using Venu.Events.GraphType.Types;
-using Venu.Events.Services;
+using Venu.Events.API.Common;
+using Venu.Events.API.DataAccess;
+using Venu.Events.API.Domain;
+using Venu.Events.API.GraphType.AppSchema;
+using Venu.Events.API.GraphType.Mutations;
+using Venu.Events.API.GraphType.Queries;
+using Venu.Events.API.GraphType.Types;
+using Venu.Events.API.Services;
 
 namespace Venu.Events.API
 {
