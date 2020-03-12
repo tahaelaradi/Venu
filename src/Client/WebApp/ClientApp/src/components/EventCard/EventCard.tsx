@@ -8,6 +8,7 @@ import {
 
 type ProductCardProps = {
   title: string;
+  description: string;
   image: any;
   data: any;
   onClick?: (e: any) => void;
@@ -16,8 +17,9 @@ type ProductCardProps = {
 
 const EventCard: React.FC<ProductCardProps> = ({
   title,
+  description,
   image,
-  onClick,
+  onClick
 }) => {
   return (
     <EventCardWrapper onClick={onClick} className="product-card">
@@ -31,6 +33,7 @@ const EventCard: React.FC<ProductCardProps> = ({
       </EventImageWrapper>
       <EventInfo>
         <h3 className="event-title">{title}</h3>
+        <span className="event-description">{description}</span>
       </EventInfo>
     </EventCardWrapper>
   );

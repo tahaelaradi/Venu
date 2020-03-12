@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
 import registerServiceWorker from "./registerServiceWorker";
 
 import { Client as Styletron } from "styletron-engine-atomic";
@@ -12,7 +11,7 @@ import { theme } from "./theme";
 import App from "./App";
 
 const client = new ApolloClient({
-  uri: process.env.VENU_API_URL
+  uri: process.env.REACT_APP_API_URL
 });
 
 function Index() {

@@ -1,20 +1,17 @@
 import React from "react";
 import StoreNav from "../../components/StoreNav/StoreNav";
-import { openModal, Modal } from "@redq/reuse-modal";
+import { Modal } from "@redq/reuse-modal";
 
 import {
   MainContentArea,
-  SidebarSection,
   ContentSection,
-  OfferSection,
   MobileCarouselDropdown
 } from "../../styled/pages.style";
+import Events from "../../containers/Events/Events";
 
 const PAGE_TYPE = "home_page";
 
 function HomePage({ deviceType }) {
-  const targetRef = React.useRef(null);
-
   return (
     <>
       <header>
@@ -27,19 +24,25 @@ function HomePage({ deviceType }) {
               <StoreNav />
             </MobileCarouselDropdown>
             <MainContentArea>
-              <SidebarSection></SidebarSection>
               <ContentSection>
-                <div ref={targetRef}></div>
+                <Events
+                  type={PAGE_TYPE}
+                  deviceType={deviceType}
+                  fetchLimit={16}
+                />
               </ContentSection>
             </MainContentArea>
           </>
         ) : (
           <MainContentArea>
             <StoreNav />
-            <OfferSection>
-              <div style={{ margin: "0px" }}></div>
-            </OfferSection>
-            <ContentSection style={{ width: "100%" }}></ContentSection>
+            <ContentSection style={{ width: "100%" }}>
+              <Events
+                type={PAGE_TYPE}
+                deviceType={deviceType}
+                fetchLimit={16}
+              />
+            </ContentSection>
           </MainContentArea>
         )}
       </Modal>
