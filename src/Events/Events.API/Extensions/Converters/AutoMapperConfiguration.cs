@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Venu.Events.API.Domain;
 using Venu.Events.API.Queries.Dtos;
+using EventAddress = Venu.Events.API.Domain.Address;
+using EventInputAddress = Venu.Events.API.Commands.Dtos.Address;
 
 namespace Venu.Events.API.Extensions.Converters
 {
@@ -21,6 +23,7 @@ namespace Venu.Events.API.Extensions.Converters
                     cfg =>
                     {
                         cfg.CreateMap<EventDto, Event>().ReverseMap();
+                        cfg.CreateMap<EventInputAddress, EventAddress>();
                     });
 
             Mapper = config.CreateMapper();
