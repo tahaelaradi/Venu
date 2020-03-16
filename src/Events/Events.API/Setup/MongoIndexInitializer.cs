@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Venu.Events.API.Domain;
-using Event = Venu.Events.API.Domain.Event;
-using IRepository = Venu.Events.API.Domain.IRepository;
+// using Event = Venu.Events.API.Domain.Event;
+// using IRepository = Venu.Events.API.Domain.IRepository;
 
 namespace Venu.Events.API.Setup
 {
@@ -13,7 +13,8 @@ namespace Venu.Events.API.Setup
             if (repository == null)
                 throw new ArgumentNullException(nameof(repository));
 
-            await repository.CreateAscendingIndexAsync<Event>(d => d.Name);
+            await repository.CreateAscendingIndexAsync<Event>(d => d.Id);
+            await repository.CreateAscendingIndexAsync<Venue>(d => d.Id);
         }
     }
 }

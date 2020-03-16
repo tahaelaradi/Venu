@@ -12,14 +12,14 @@
         public string Summary { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string VenueId { get; set; }
         public string[] Tags { get; set; }
         public bool HasVenue { get; set; }
         public bool IsFree { get; set; }
+        public Venue Venue { get; set; }
         public Address Address { get; set; }
         public Image Image { get; set; }
     }
-    
+
     public class Address
     {
         public string City { get; set; }
@@ -35,5 +35,23 @@
     {
         public string Id { get; set; }
         public string Url { get; set; }
+    }
+    
+    public class Venue
+    {
+        public string Name { get; set; }
+        public Layout Layout { get; set; }
+    }
+
+    public class Layout
+    {
+        public Section[] Sections { get; set; }
+        public float Price { get; set; }
+    }
+
+    public class Section
+    {
+        public int Rows { get; set; }
+        public int Columns { get; set; }
     }
 }

@@ -15,23 +15,21 @@ namespace Venu.Events.API.Domain
 
         public int Version { get; set; }
         public string Name { get; set; }
-        public string EventId { get; set; }
         public Layout Layout { get; set; }
 
-        private Venue(string name, string eventId)
+        private Venue(string name)
         {
             Name = name;
-            EventId = eventId;
             Version = 1;
         }
 
         public static Venue CreateDraft(
-            string name,
-            string eventId,
+            string name/*,
             Layout layout
+            */
         )
         {
-            return new Venue(name, eventId)
+            return new Venue(name)
             {
                 // TODO: Add converters (maybe use automapper?)
                 Layout = new Layout()

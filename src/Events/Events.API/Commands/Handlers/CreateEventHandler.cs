@@ -10,16 +10,25 @@ namespace Venu.Events.API.Commands.Handlers
     public class CreateEventHandler : IRequestHandler<CreateEventCommand, EventDto>
     {
         private readonly IRepository _eventRepository;
+        private readonly IRepository _venueRepository;
 
-        public CreateEventHandler(IRepository eventRepository)
+        public CreateEventHandler(
+            IRepository eventRepository,
+            IRepository _venueRepository
+        )
         {
             this._eventRepository = eventRepository;
+            this._venueRepository = _venueRepository;
         }
 
         public async Task<EventDto> Handle(CreateEventCommand request, CancellationToken cancellationToken)
         {
+            var venueDraft = Venue.CreateDraft(request.EventInput.Venue.Name);
+
+            await _venueRepository.AddOneAsync(venueDraft);
+
             // TODO: Deconstruct EventInput from request
-            var draft = Event.CreateDraft
+            var evenDraft = Event.CreateDraft
             (
                 request.EventInput.Name,
                 request.EventInput.Type,
@@ -29,7 +38,7 @@ namespace Venu.Events.API.Commands.Handlers
                 request.EventInput.Summary,
                 request.EventInput.StartDate,
                 request.EventInput.EndDate,
-                request.EventInput.VenueId,
+                venueDraft.Id,
                 request.EventInput.Tags,
                 request.EventInput.HasVenue,
                 request.EventInput.IsFree,
@@ -37,12 +46,12 @@ namespace Venu.Events.API.Commands.Handlers
                 request.EventInput.Image.ToContract()
             );
 
-            await _eventRepository.AddOneAsync(draft);
+            await _eventRepository.AddOneAsync(evenDraft);
 
             return new EventDto
             {
-                Id = draft.Id,
-                Name = draft.Name
+                Id = evenDraft.Id,
+                Name = evenDraft.Name
             };
         }
     }
