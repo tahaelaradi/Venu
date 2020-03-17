@@ -23,11 +23,15 @@ namespace Venu.Events.API.Commands.Handlers
 
         public async Task<EventDto> Handle(CreateEventCommand request, CancellationToken cancellationToken)
         {
-            var venueDraft = Venue.CreateDraft(request.EventInput.Venue.Name);
+            var venueDraft = request.EventInput.Venue == null
+                ? null
+                : Venue.CreateDraft(
+                    request.EventInput.Venue.Name,
+                    request.EventInput.Venue.Sections.ToContract()
+                );
 
-            await _venueRepository.AddOneAsync(venueDraft);
+            if (request.EventInput.Venue != null) await _venueRepository.AddOneAsync(venueDraft);
 
-            // TODO: Deconstruct EventInput from request
             var evenDraft = Event.CreateDraft
             (
                 request.EventInput.Name,
@@ -38,7 +42,7 @@ namespace Venu.Events.API.Commands.Handlers
                 request.EventInput.Summary,
                 request.EventInput.StartDate,
                 request.EventInput.EndDate,
-                venueDraft.Id,
+                venueDraft == null ? string.Empty : venueDraft.Id,
                 request.EventInput.Tags,
                 request.EventInput.HasVenue,
                 request.EventInput.IsFree,

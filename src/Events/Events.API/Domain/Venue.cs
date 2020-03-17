@@ -1,4 +1,6 @@
-﻿using MongoDB.Bson;
+﻿using System.Collections.Generic;
+using System.Linq;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDbGenericRepository.Attributes;
 using MongoDbGenericRepository.Models;
@@ -15,7 +17,7 @@ namespace Venu.Events.API.Domain
 
         public int Version { get; set; }
         public string Name { get; set; }
-        public Layout Layout { get; set; }
+        public List<Section> Sections { get; set; }
 
         private Venue(string name)
         {
@@ -24,30 +26,21 @@ namespace Venu.Events.API.Domain
         }
 
         public static Venue CreateDraft(
-            string name/*,
-            Layout layout
-            */
+            string name,
+            List<Section> sections
         )
         {
             return new Venue(name)
             {
-                // TODO: Add converters (maybe use automapper?)
-                Layout = new Layout()
-                {
-                }
+               Sections = sections
             };
         }
-    }
-
-    public class Layout
-    {
-        public Section[] Sections { get; set; }
-        public float Price { get; set; }
     }
 
     public class Section
     {
         public int Rows { get; set; }
         public int Columns { get; set; }
+        public double Price { get; set; }
     }
 }

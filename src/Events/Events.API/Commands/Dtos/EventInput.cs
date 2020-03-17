@@ -1,4 +1,5 @@
 ﻿﻿using System;
+using System.Collections.Generic;
 
  namespace Venu.Events.API.Commands.Dtos
 {
@@ -40,18 +41,13 @@
     public class Venue
     {
         public string Name { get; set; }
-        public Layout Layout { get; set; }
-    }
-
-    public class Layout
-    {
-        public Section[] Sections { get; set; }
-        public float Price { get; set; }
+        public List<Section> Sections { get; set; }
     }
 
     public class Section
     {
         public int Rows { get; set; }
         public int Columns { get; set; }
+        public double Price { get; set; }
     }
 }
