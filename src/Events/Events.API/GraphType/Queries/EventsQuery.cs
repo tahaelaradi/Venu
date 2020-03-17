@@ -16,6 +16,17 @@ namespace Venu.Events.API.GraphType.Queries
                 "events",
                 resolve: context => _query.GetEvents()
             );
+            Field<EventType>(
+                "event",
+                arguments: new QueryArguments(
+                    new QueryArgument<IdGraphType> { Name = "id" }
+                ),
+                resolve: context =>
+                {
+                    var id = context.GetArgument<string>("id");
+                    return _query.GetEvent(id);
+                }
+            );
         }
     }
 }
