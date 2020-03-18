@@ -24,7 +24,21 @@ namespace Venu.Events.API.GraphType.Queries
                 resolve: context =>
                 {
                     var id = context.GetArgument<string>("id");
-                    return _query.GetEvent(id);
+                    return _query.GetEventById(id);
+                }
+            );
+            Field<ListGraphType<EventType>>(
+                "eventsSearch",
+                arguments: new QueryArguments(
+                    new QueryArgument<StringGraphType> { Name = "name" },
+                    new QueryArgument<StringGraphType> { Name = "category" }
+                ),
+                resolve: context =>
+                {
+                    var name = context.GetArgument<string>("name");
+                    var category = context.GetArgument<string>("category");
+                    
+                    return _query.GetEventsBySearch(name, category);
                 }
             );
         }

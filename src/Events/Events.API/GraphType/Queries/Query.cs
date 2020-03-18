@@ -20,9 +20,18 @@ namespace Venu.Events.API.GraphType.Queries
             return await _mediator.Send(new FindAllEventsQuery());
         }
 
-        public async Task<EventDto> GetEvent(string id)
+        public async Task<EventDto> GetEventById(string id)
         {
             return await _mediator.Send(new FindEventQuery{ Id = id });
+        }
+        
+        public async Task<IEnumerable<EventDto>> GetEventsBySearch(string name, string category)
+        {
+            return await _mediator.Send(new FindEventsBySearchQuery
+            {
+                Name = name,
+                Category = category
+            });
         }
     }
 }

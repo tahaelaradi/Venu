@@ -22,11 +22,11 @@ namespace Venu.Events.API.Queries.Handlers
         {
             try
             {
-                var e = await _eventRepository.GetByIdAsync<Event>(request.Id);
-                if (e == null)
+                var result = await _eventRepository.GetByIdAsync<Event>(request.Id);
+                if (result == null)
                     throw SecurityException.NotFound("event", request.Id);
 
-                return e.ToDto();
+                return result.ToDto();
             }
             catch (FormatException)
             {
