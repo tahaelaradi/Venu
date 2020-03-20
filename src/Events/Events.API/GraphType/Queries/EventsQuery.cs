@@ -12,10 +12,6 @@ namespace Venu.Events.API.GraphType.Queries
         {
             _query = new Query(mediator);
             
-            Field<ListGraphType<EventType>>(
-                "events",
-                resolve: context => _query.GetEvents()
-            );
             Field<EventType>(
                 "event",
                 arguments: new QueryArguments(
@@ -28,13 +24,16 @@ namespace Venu.Events.API.GraphType.Queries
                 }
             );
             Field<ListGraphType<EventType>>(
-                "eventsSearch",
+                "events",
                 arguments: new QueryArguments(
                     new QueryArgument<StringGraphType> { Name = "name" },
                     new QueryArgument<StringGraphType> { Name = "category" }
                 ),
                 resolve: context =>
                 {
+                    // If query has no search params return all events
+                    if (context.Arguments.Count == 0) return _query.GetEvents();
+                    
                     var name = context.GetArgument<string>("name");
                     var category = context.GetArgument<string>("category");
                     
