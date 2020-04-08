@@ -5,17 +5,14 @@
         <RootNamespace>Venu.Events.API</RootNamespace>
         <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
         <UserSecretsId>6e11be50-c89a-4aad-86f8-2f65c18a6e64</UserSecretsId>
-        <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <DockerfileContext>..\..</DockerfileContext>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Shared\Shared.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="3.0.0" />
       <PackageReference Include="AutoMapper" Version="9.0.0" />
+      <PackageReference Include="Consul" Version="0.7.2.5" />
       <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="3.3.0" />
       <PackageReference Include="GraphQL.Server.Ui.Playground" Version="3.3.0" />
       <PackageReference Include="MassTransit.AspNetCore" Version="6.0.0" />
@@ -25,6 +22,11 @@
       <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
       <PackageReference Include="MongoDB.Driver" Version="2.10.0" />
       <PackageReference Include="MongoDbGenericRepository" Version="1.4.0" />
+      <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Shared\Shared.csproj" />
     </ItemGroup>
 
 

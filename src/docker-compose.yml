@@ -1,0 +1,113 @@
+version: '3.4'
+
+services:
+  mongo:
+    image: mongo
+    hostname: 127.0.0.1
+    environment:
+      - MONGO_INITDB_DATABASE:venu_events
+    ports:
+      - 27017:27017
+    volumes:
+      - /data/db:/data/db
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongo
+
+  postgres:
+    container_name: postgres
+    image: postgres
+    hostname: localhost
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
+      POSTGRES_DB: venu_identity
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin:/root/.pgadmin
+    ports:
+      - 5050:80
+    restart: unless-stopped
+    logging:
+      driver: none
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_PASS:guest
+      - RABBITMQ_DEFAULT_USER:guest
+      - RABBITMQ_DEFAULT_VHOST:venu
+
+  webapigateway:
+    image: ${DOCKER_REGISTRY-}webapigateway
+    container_name: webapigateway
+    hostname: webapigateway
+    build:
+      context: .
+      dockerfile: ApiGateways/WebApiGateway/Dockerfile
+    ports:
+      - 5001:80
+    environment:
+      PUBLIC_PORT: 5001
+    links:
+      - identity
+      - events.api
+    depends_on:
+      - identity
+      - events.api
+  
+  identity:
+    image: ${DOCKER_REGISTRY-}identity
+    container_name: identity.api
+    hostname: identity.api
+    restart: always
+    build:
+      context: .
+      dockerfile: Identity/Identity/Dockerfile
+    ports:
+      - 5002:80
+    environment:
+      PUBLIC_PORT: 5002
+      DB_CONNECTION_STRING: "User ID=postgres;Password=postgres;Server=docker.for.win.localhost;Port=5432;Database=venu_identity;Integrated Security=true;Pooling=true;"
+    depends_on:
+      - postgres
+
+  events.api:
+    image: ${DOCKER_REGISTRY-}eventsapi
+    container_name: events.api
+    hostname: events.api
+    restart: always
+    build:
+      context: .
+      dockerfile: Events/Events.API/Dockerfile
+    ports:
+      - 5003:80
+    environment:
+      PUBLIC_PORT: 5003
+    depends_on:
+      - mongo
+      - rabbitmq
+
+volumes:
+  postgres:
+  pgadmin:

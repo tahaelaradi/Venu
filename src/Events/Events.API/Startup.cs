@@ -56,8 +56,7 @@ namespace Venu.Events.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection()
-                .UseRouting()
+            app.UseRouting()
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {
@@ -78,7 +77,7 @@ namespace Venu.Events.API
 
             hcBuilder.AddCheck("self", () => HealthCheckResult.Healthy());
 
-            var rabbitMqUrl = configuration.GetOptions<RabbitMqOptions>("rabbitMQ").Url;
+            var rabbitMqUrl = configuration.GetOptions<RabbitMqOptions>("rabbitMQ").Host;
             hcBuilder.AddRabbitMQ(rabbitMqUrl, name: "event-service-rabbitmqbus-check", tags: new string[] { "rabbitmqbus" });
 
             return services;
@@ -92,7 +91,7 @@ namespace Venu.Events.API
 
                 return Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
-                    var host = cfg.Host(new Uri(rabbitMqOption.Url), "/", hc =>
+                    var host = cfg.Host(new Uri(rabbitMqOption.Host), "venu", hc =>
                     {
                         hc.Username(rabbitMqOption.UserName);
                         hc.Password(rabbitMqOption.Password);

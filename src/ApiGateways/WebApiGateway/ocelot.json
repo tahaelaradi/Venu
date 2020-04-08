@@ -6,11 +6,11 @@
         "POST"
       ],
       "DownstreamPathTemplate": "/users/authenticate",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44309
+          "Host": "identity",
+          "Port": 80
         }
       ]
     },
@@ -20,11 +20,11 @@
         "POST"
       ],
       "DownstreamPathTemplate": "/users/register",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44309
+          "Host": "identity",
+          "Port": 80
         }
       ]
     },
@@ -34,11 +34,11 @@
         "GET", "PUT", "DELETE"
       ],
       "DownstreamPathTemplate": "/users/{userId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44309
+          "Host": "identity",
+          "Port": 80
         }
       ]
     },
@@ -48,11 +48,11 @@
         "POST", "GET"
       ],
       "DownstreamPathTemplate": "/events",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "events.api",
+          "Port": 80
         }
       ]
     },
@@ -62,11 +62,11 @@
         "POST"
       ],
       "DownstreamPathTemplate": "/api/graphql",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "events.api",
+          "Port": 80
         }
       ]
     },
@@ -76,11 +76,11 @@
         "PUT", "GET", "DELETE"
       ],
       "DownstreamPathTemplate": "/events/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "events.api",
+          "Port": 80
         }
       ]
     }

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using Venu.Identity.DataAccess;
 using Venu.Identity.Helpers;
 using Venu.Identity.Services;
@@ -86,15 +87,22 @@ namespace Venu.Identity
     {
         public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-            var connString = configuration.GetConnectionString("IdentityDatabase");
+            var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                connectionString = configuration.GetConnectionString("IdentityDatabase");;
+            }
+            
             services.AddEntityFrameworkNpgsql()
                 .AddDbContext<UsersContext>(options =>
                 {
-                    options.UseNpgsql(connString, npgsqlOptionsAction: sqlOptions =>
+                    options.UseNpgsql(connectionString, npgsqlOptionsAction: sqlOptions =>
                     {
                         sqlOptions.EnableRetryOnFailure(maxRetryCount: 3);
                     });
                 });
+            
+            Log.Information($"Running with DB Connection String: {connectionString}");
 
             return services;
         }

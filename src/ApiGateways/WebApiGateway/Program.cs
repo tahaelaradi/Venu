@@ -24,7 +24,7 @@ namespace Venu.ApiGateways.WebApiGateway
             var key = Encoding.ASCII.GetBytes("THIS_IS_A_RANDOM_SECRET_e03a00d0-5881-4267-9d41-fd948e04a35a");
             
             return WebHost.CreateDefaultBuilder(args)
-                .UseUrls("https://localhost:8001")
+                .UseUrls("http://0.0.0.0:80")
                 .ConfigureAppConfiguration(ic =>
                 {
                     ic.AddJsonFile("appsettings.json", true, true)
@@ -67,7 +67,7 @@ namespace Venu.ApiGateways.WebApiGateway
                 })
                 .UseSerilog((context, loggerConfiguration) =>
                 {
-                    loggerConfiguration.WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3} {Properties:j}] {Message:lj}{NewLine}{Exception}");
+                    loggerConfiguration.WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3} {Properties:j}] {Message:lj}{NewLine}{Exception}{NewLine}");
                 })
                 .Build();
         }

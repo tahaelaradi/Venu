@@ -3,6 +3,9 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <RootNamespace>Venu.Identity</RootNamespace>
+        <UserSecretsId>abc990b6-f3ba-48ac-9dbb-b3b748044cb3</UserSecretsId>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <DockerfileContext>..\..</DockerfileContext>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,7 +15,13 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0" />
+      <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.0" />
+      <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Shared\Shared.csproj" />
     </ItemGroup>
 
 
