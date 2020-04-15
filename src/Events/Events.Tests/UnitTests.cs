@@ -17,7 +17,7 @@ namespace Events.Tests
         [Test]
         public async Task Should_test_the_consumer()
         {
-            var harness = new InMemoryTestHarness("rabbitmq://localhost/venu/");
+            var harness = new InMemoryTestHarness("amqp://rabbitmq");
             var consumerHarness = harness.Consumer<EventCreatedConsumer>();
 
             await harness.Start();

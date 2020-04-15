@@ -48,11 +48,20 @@ services:
     logging:
       driver: none
 
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - ./config/redis.conf:/redis.conf
+    command: [ "redis-server", "/redis.conf" ]
+
   rabbitmq:
     image: rabbitmq:3-management-alpine
     ports:
       - 5672:5672
       - 15672:15672
+    network_mode: host
     environment:
       - RABBITMQ_DEFAULT_PASS:guest
       - RABBITMQ_DEFAULT_USER:guest
