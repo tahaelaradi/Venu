@@ -31,6 +31,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cache", "BuildingBlocks\Cac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "BuildingBlocks\Tests\Tests.csproj", "{3DCF9F73-2D7D-4DD0-A741-B13A32D937FB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ticketing", "Ticketing", "{6D05D5BC-00C6-4330-A329-815209538136}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticketing.API", "Ticketing\Ticketing.API\Ticketing.API.csproj", "{A4D22AB7-07A0-4B06-9A0D-E91EB1066D9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +77,10 @@ Global
 		{3DCF9F73-2D7D-4DD0-A741-B13A32D937FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DCF9F73-2D7D-4DD0-A741-B13A32D937FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DCF9F73-2D7D-4DD0-A741-B13A32D937FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4D22AB7-07A0-4B06-9A0D-E91EB1066D9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4D22AB7-07A0-4B06-9A0D-E91EB1066D9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4D22AB7-07A0-4B06-9A0D-E91EB1066D9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4D22AB7-07A0-4B06-9A0D-E91EB1066D9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,6 +94,7 @@ Global
 		{409BAA86-CC54-4E33-9CCF-6B47549F1FB5} = {874A2AF7-C209-4C18-97E4-EB5C19A217CD}
 		{513CF9DC-9E8D-4B0D-AF41-71439645E68B} = {874A2AF7-C209-4C18-97E4-EB5C19A217CD}
 		{3DCF9F73-2D7D-4DD0-A741-B13A32D937FB} = {874A2AF7-C209-4C18-97E4-EB5C19A217CD}
+		{A4D22AB7-07A0-4B06-9A0D-E91EB1066D9B} = {6D05D5BC-00C6-4330-A329-815209538136}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C7EB0258-351C-4E78-BFD0-993ACF0661DC}

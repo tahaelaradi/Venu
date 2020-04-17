@@ -1,14 +1,18 @@
 using System.Text;
+using GrpcJsonTranscoder;
+using GrpcJsonTranscoder.Grpc;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Serilog;
+using Ticketing.API;
 
 namespace Venu.ApiGateways.WebApiGateway
 {
@@ -25,6 +29,7 @@ namespace Venu.ApiGateways.WebApiGateway
             
             return WebHost.CreateDefaultBuilder(args)
                 .UseUrls("http://0.0.0.0:80")
+                .UseKestrel()
                 .ConfigureAppConfiguration(ic =>
                 {
                     ic.AddJsonFile("appsettings.json", true, true)
@@ -40,6 +45,12 @@ namespace Venu.ApiGateways.WebApiGateway
                                 .AllowAnyHeader()
                                 .AllowCredentials());
                     });
+                    
+                    s.AddGrpcJsonTranscoder(() => 
+                        new GrpcAssemblyResolver().ConfigGrpcAssembly(
+                            s.BuildServiceProvider().GetService<ILogger<GrpcAssemblyResolver>>(),
+                            typeof(Greeter.GreeterBase).Assembly));
+                    
                     s.AddAuthentication(options =>
                         {
                             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -61,13 +72,22 @@ namespace Venu.ApiGateways.WebApiGateway
                 })
                 .Configure(a =>
                 {
+                    var configuration = new OcelotPipelineConfiguration
+                    {
+                        PreQueryStringBuilderMiddleware = async (ctx, next) =>
+                        {
+                            await ctx.HandleGrpcRequestAsync(next);
+                        }
+                    };
+                    
                     a.UseAuthentication();
                     a.UseCors("CorsPolicy");
-                    a.UseOcelot().Wait();
+                    a.UseOcelot(configuration).Wait();
                 })
                 .UseSerilog((context, loggerConfiguration) =>
                 {
-                    loggerConfiguration.WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3} {Properties:j}] {Message:lj}{NewLine}{Exception}{NewLine}");
+                    loggerConfiguration
+                        .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3} {Properties:j}] {Message:lj}{NewLine}{Exception}");
                 })
                 .Build();
         }

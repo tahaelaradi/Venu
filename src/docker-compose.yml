@@ -61,7 +61,6 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
-    network_mode: host
     environment:
       - RABBITMQ_DEFAULT_PASS:guest
       - RABBITMQ_DEFAULT_USER:guest
@@ -116,6 +115,18 @@ services:
     depends_on:
       - mongo
       - rabbitmq
+
+  ticketing.api:
+    image: ${DOCKER_REGISTRY-}ticketingapi
+    container_name: ticketing.api
+    hostname: ticketing.api
+    restart: always
+    build:
+      context: .
+      dockerfile: Ticketing/Ticketing.API/Dockerfile
+    ports:
+      - 5004:80
+      - 50044:81
 
 volumes:
   postgres:

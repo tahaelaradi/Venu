@@ -6,6 +6,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["ApiGateways/WebApiGateway/WebApiGateway.csproj", "ApiGateways/WebApiGateway/"]
+COPY ["Ticketing/Ticketing.API/Ticketing.API.csproj", "Ticketing/Ticketing.API/"]
 RUN dotnet restore "ApiGateways/WebApiGateway/WebApiGateway.csproj"
 COPY . .
 WORKDIR "/src/ApiGateways/WebApiGateway"

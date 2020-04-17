@@ -83,6 +83,20 @@
           "Port": 80
         }
       ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/tickets",
+      "UpstreamHttpMethod": [
+        "POST"
+      ],
+      "DownstreamPathTemplate": "/greet.Greeter/SayHello",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ticketing.api",
+          "Port": 81
+        }
+      ]
     }
   ]
 }

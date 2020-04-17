@@ -1,0 +1,17 @@
+{
+  "profiles": {
+    "Ticketing.API": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:5004;http://localhost:50044"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "environmentVariables": {},
+      "httpPort": 50044
+    }
+  }
+}

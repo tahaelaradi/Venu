@@ -77,8 +77,8 @@ namespace Venu.Events.API
 
             hcBuilder.AddCheck("self", () => HealthCheckResult.Healthy());
 
-            var rabbitMqUrl = configuration.GetOptions<RabbitMqOptions>("rabbitMQ").Host;
-            hcBuilder.AddRabbitMQ(rabbitMqUrl, name: "event-service-rabbitmqbus-check", tags: new string[] { "rabbitmqbus" });
+            var rabbitMqHost = configuration.GetOptions<RabbitMqOptions>("rabbitMQ").Host;
+            hcBuilder.AddRabbitMQ(rabbitMqHost, name: "rabbitmqbus-check", tags: new string[] { "rabbitmqbus" });
 
             return services;
         }
@@ -91,7 +91,7 @@ namespace Venu.Events.API
 
                 return Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
-                    var host = cfg.Host(new Uri(rabbitMqOption.Host), "venu", hc =>
+                    var host = cfg.Host(new Uri(rabbitMqOption.Host), "/", hc =>
                     {
                         hc.Username(rabbitMqOption.UserName);
                         hc.Password(rabbitMqOption.Password);
