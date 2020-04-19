@@ -1,6 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using MassTransit;
 using MediatR;
+using Venu.BuildingBlocks.Shared.Messaging;
 using Venu.Events.API.Domain;
 using Venu.Events.API.Extensions.Converters;
 using Venu.Events.API.Queries.Dtos;
@@ -9,16 +11,20 @@ namespace Venu.Events.API.Commands.Handlers
 {
     public class CreateEventHandler : IRequestHandler<CreateEventCommand, EventDto>
     {
+        private readonly IBusControl _bus;
+
         private readonly IRepository _eventRepository;
         private readonly IRepository _venueRepository;
 
         public CreateEventHandler(
+            IBusControl bus,
             IRepository eventRepository,
-            IRepository _venueRepository
+            IRepository venueRepository
         )
         {
-            this._eventRepository = eventRepository;
-            this._venueRepository = _venueRepository;
+            _bus = bus;
+            _eventRepository = eventRepository;
+            _venueRepository = venueRepository;
         }
 
         public async Task<EventDto> Handle(CreateEventCommand request, CancellationToken cancellationToken)
@@ -51,6 +57,12 @@ namespace Venu.Events.API.Commands.Handlers
             );
 
             await _eventRepository.AddOneAsync(evenDraft);
+
+            await _bus.Publish<EventCreated>(new
+            {
+                Id = evenDraft.Id,
+                Name = evenDraft.Name
+            });
 
             return new EventDto
             {

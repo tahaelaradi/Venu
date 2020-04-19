@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Grpc.Core;
 using Microsoft.Extensions.Logging;
+using Ticketing.API;
 
-namespace Ticketing.API
+namespace Venu.Ticketing.API.Services
 {
     public class GreeterService : Greeter.GreeterBase
     {

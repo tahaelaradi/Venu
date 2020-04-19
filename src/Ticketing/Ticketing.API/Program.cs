@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Hosting;
 using Venu.BuildingBlocks.Shared.Logging;
 
-namespace Ticketing.API
+namespace Venu.Ticketing.API
 {
     public class Program
     {

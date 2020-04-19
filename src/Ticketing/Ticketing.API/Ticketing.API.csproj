@@ -6,6 +6,7 @@
         <UserSecretsId>58bcb19a-4af7-4d14-83c8-8a4f04da94b1</UserSecretsId>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <DockerfileContext>..\..</DockerfileContext>
+        <RootNamespace>Venu.Ticketing.API</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -14,6 +15,10 @@
 
     <ItemGroup>
         <PackageReference Include="Grpc.AspNetCore" Version="2.24.0" />
+        <PackageReference Include="MassTransit.AspNetCore" Version="6.0.0" />
+        <PackageReference Include="MassTransit.RabbitMQ" Version="6.0.0" />
+        <PackageReference Include="MediatR" Version="6.0.0" />
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0" />

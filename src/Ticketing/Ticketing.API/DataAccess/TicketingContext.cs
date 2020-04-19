@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Ticketing.API.Domain;
+using Venu.Ticketing.API.Domain;
 
-namespace Ticketing.API.DataAccess
+namespace Venu.Ticketing.API.DataAccess
 {
     public class TicketingContext : DbContext
     {
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Event> Events { get; set; }
 
         public TicketingContext(DbContextOptions<TicketingContext> options) : base(options)
         {

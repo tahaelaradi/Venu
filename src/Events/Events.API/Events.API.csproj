@@ -12,9 +12,9 @@
     <ItemGroup>
       <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="3.0.0" />
       <PackageReference Include="AutoMapper" Version="9.0.0" />
-      <PackageReference Include="Consul" Version="0.7.2.5" />
       <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="3.3.0" />
       <PackageReference Include="GraphQL.Server.Ui.Playground" Version="3.3.0" />
+      <PackageReference Include="MassTransit" Version="6.0.1" />
       <PackageReference Include="MassTransit.AspNetCore" Version="6.0.0" />
       <PackageReference Include="MassTransit.RabbitMQ" Version="6.0.0" />
       <PackageReference Include="MediatR" Version="6.0.0" />

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Ticketing.API.Domain
+namespace Venu.Ticketing.API.Domain
 {
     [Table("Customer")]
     public class Customer

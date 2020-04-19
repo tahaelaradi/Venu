@@ -22,7 +22,7 @@ using Venu.Events.API.GraphType.AppSchema;
 using Venu.Events.API.GraphType.Mutations;
 using Venu.Events.API.GraphType.Queries;
 using Venu.Events.API.GraphType.Types;
-using Venu.Events.API.Services;
+using Venu.Events.API.IntegrationHandlers;
 
 namespace Venu.Events.API
 {
@@ -35,7 +35,6 @@ namespace Venu.Events.API
             _configuration = configuration;
         }
         
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
@@ -45,10 +44,9 @@ namespace Venu.Events.API
                 .AddMassTransit(_configuration)
                 .AddGraphTypes()                
                 .AddHealthChecks(_configuration)
-                .AddMediatR(typeof(EventService));
+                .AddMediatR();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -85,10 +83,12 @@ namespace Venu.Events.API
 
         public static IServiceCollection AddMassTransit(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddScoped<EventCreatedConsumer>();
+            
             services.AddMassTransit((provider) =>
             {
                 var rabbitMqOption = configuration.GetOptions<RabbitMqOptions>("rabbitMQ");
-
+            
                 return Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
                     var host = cfg.Host(new Uri(rabbitMqOption.Host), "/", hc =>
@@ -96,9 +96,14 @@ namespace Venu.Events.API
                         hc.Username(rabbitMqOption.UserName);
                         hc.Password(rabbitMqOption.Password);
                     });
+                    
+                    cfg.ReceiveEndpoint("event", x =>
+                    {
+                        x.Consumer<EventCreatedConsumer>(provider);
+                    });
                 });
             });
-
+        
             return services;
         }
 
