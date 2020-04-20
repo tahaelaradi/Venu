@@ -74,6 +74,7 @@ namespace Venu.Ticketing.API
             
             Log.Information($"Running with DB Connection String: {connectionString}");
 
+            services.AddTransient<CustomerRepository>();
             services.AddTransient<EventRepository>();
             
             return services;
@@ -81,6 +82,7 @@ namespace Venu.Ticketing.API
         
         public static IServiceCollection AddMassTransit(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddScoped<CustomerCreatedConsumer>();
             services.AddScoped<EventCreatedConsumer>();
             
             services.AddMassTransit((provider) =>
@@ -97,6 +99,7 @@ namespace Venu.Ticketing.API
                     
                     cfg.ReceiveEndpoint("ticketing", x =>
                     {
+                        x.Consumer<CustomerCreatedConsumer>(provider);
                         x.Consumer<EventCreatedConsumer>(provider);
                     });
                 });

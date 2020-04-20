@@ -1,6 +1,9 @@
 using System;
 using System.Text;
 using AutoMapper;
+using MassTransit;
+using MassTransit.AspNetCoreIntegration;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,8 +13,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using Venu.BuildingBlocks.Shared;
+using Venu.BuildingBlocks.Shared.Types;
 using Venu.Identity.DataAccess;
 using Venu.Identity.Helpers;
+using Venu.Identity.IntegrationHandlers;
 using Venu.Identity.Services;
 
 namespace Venu.Identity
@@ -28,35 +34,12 @@ namespace Venu.Identity
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
-            services.AddCustomDbContext(Configuration);
 
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-            // configure strongly typed settings objects
-            var appSettingsSection = Configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingsSection);
-
-            // configure jwt authentication
-            var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-            services.AddAuthentication(x =>
-                {
-                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(x =>
-                {
-                    x.RequireHttpsMetadata = false;
-                    x.SaveToken = true;
-                    x.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                });
+            services.AddCustomDbContext(Configuration)
+                .AddAuthentication(Configuration)
+                .AddMediatR()
+                .AddMassTransit(Configuration)
+                .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IUserService, UserService>();
         }
@@ -82,6 +65,36 @@ namespace Venu.Identity
 
     static class CustomExtensionsMethods
     {
+        public static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
+        {
+            // configure strongly typed settings objects
+            var appSettingsSection = configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            // configure jwt authentication
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddAuthentication(x =>
+                {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+
+            return services;
+        }
+
         public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
@@ -100,6 +113,32 @@ namespace Venu.Identity
                 });
             
             Log.Information($"Running with DB Connection String: {connectionString}");
+
+            return services;
+        }
+        
+        public static IServiceCollection AddMassTransit(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddScoped<UserCreatedConsumer>();
+            
+            services.AddMassTransit((provider) =>
+            {
+                var rabbitMqOption = configuration.GetOptions<RabbitMqOptions>("rabbitMQ");
+            
+                return Bus.Factory.CreateUsingRabbitMq(cfg =>
+                {
+                    var host = cfg.Host(new Uri(rabbitMqOption.Host), "/", hc =>
+                    {
+                        hc.Username(rabbitMqOption.UserName);
+                        hc.Password(rabbitMqOption.Password);
+                    });
+                    
+                    cfg.ReceiveEndpoint("identity", x =>
+                    {
+                        x.Consumer<UserCreatedConsumer>(provider);
+                    });
+                });
+            });
 
             return services;
         }

@@ -11,6 +11,6 @@ namespace Venu.Ticketing.API.Commands
             this.EventInput = eventInput;
         }
         
-        public EventInput EventInput { get; set; }
+        public EventInput EventInput { get; private set; }
     }
 }

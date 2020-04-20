@@ -4,8 +4,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using MassTransit;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Venu.BuildingBlocks.Shared.Messaging;
 using Venu.Identity.DataAccess;
 using Venu.Identity.Domain;
 using Venu.Identity.Helpers;
@@ -14,13 +16,17 @@ namespace Venu.Identity.Services
 {    
     public class UserService : IUserService
     {
+        private readonly IBusControl _bus;
+
         private UsersContext _context;
         private readonly AppSettings _appSettings;
 
         public UserService(
+            IBusControl bus,
             UsersContext context,
             IOptions<AppSettings> appSettings)
         {
+            _bus = bus;
             _context = context;
             _appSettings = appSettings.Value;
         }
@@ -69,6 +75,9 @@ namespace Venu.Identity.Services
             if (string.IsNullOrWhiteSpace(password))
                 throw new AppException("Password is required");
 
+            if (string.IsNullOrWhiteSpace(user.Role))
+                throw new AppException("Role is required");
+            
             if (_context.Users.Any(x => x.Username == user.Username))
                 throw new AppException("Username \"" + user.Username + "\" is already taken");
 
@@ -80,6 +89,15 @@ namespace Venu.Identity.Services
 
             _context.Users.Add(user);
             _context.SaveChanges();
+
+            if (user.Role == "User")
+            {
+                _bus.Publish<UserCreated>(new
+                {
+                    Id = user.Id,
+                    Username = user.Username
+                });
+            }
 
             return user;
         }

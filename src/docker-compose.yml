@@ -99,6 +99,7 @@ services:
       DB_CONNECTION_STRING: "User ID=postgres;Password=postgres;Server=docker.for.win.localhost;Port=5432;Database=venu_identity;Integrated Security=true;Pooling=true;"
     depends_on:
       - postgres
+      - rabbitmq
 
   events.api:
     image: ${DOCKER_REGISTRY-}eventsapi

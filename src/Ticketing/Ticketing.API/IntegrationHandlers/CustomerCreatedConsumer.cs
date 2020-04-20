@@ -9,22 +9,22 @@ using Venu.Ticketing.API.Commands.Dtos;
 
 namespace Venu.Ticketing.API.IntegrationHandlers
 {
-    public class EventCreatedConsumer : IConsumer<EventCreated>
+    public class CustomerCreatedConsumer : IConsumer<UserCreated>
     {
-        private readonly ILogger<EventCreatedConsumer> _logger;
+        private readonly ILogger<CustomerCreatedConsumer> _logger;
         private readonly IMediator _mediator;
 
-        public EventCreatedConsumer(ILogger<EventCreatedConsumer> logger, IMediator mediator)
+        public CustomerCreatedConsumer(ILogger<CustomerCreatedConsumer> logger, IMediator mediator)
         {
             _logger = logger;
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        public async Task Consume(ConsumeContext<EventCreated> context)
+        public async Task Consume(ConsumeContext<UserCreated> context)
         {
-            _logger.LogInformation($"EventCreatedConsumer happened: Event name: {context.Message.Name}");
-            
-            await _mediator.Send(new CreateEventCommand(new EventInput(context.Message.Id, context.Message.Name)));
+            _logger.LogInformation($"CustomerCreatedConsumer happened: Username: {context.Message.Username}");
+
+            await _mediator.Send(new CreateCustomerCommand(new CustomerInput(context.Message.Id, context.Message.Username)));
 
             await Task.Delay(10);
             await Task.FromResult(0);
