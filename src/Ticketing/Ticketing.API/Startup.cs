@@ -11,10 +11,10 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using Venu.BuildingBlocks.Shared;
 using Venu.BuildingBlocks.Shared.Types;
-using Venu.Ticketing.API.DataAccess;
-using Venu.Ticketing.API.DataAccess.Repositories;
-using Venu.Ticketing.API.IntegrationHandlers;
-using Venu.Ticketing.API.Services;
+using Venu.Ticketing.API.Application.IntegrationHandlers;
+using Venu.Ticketing.API.Grpc;
+using Venu.Ticketing.Infrastructure;
+using Venu.Ticketing.Infrastructure.Repositories;
 
 namespace Venu.Ticketing.API
 {
@@ -30,8 +30,8 @@ namespace Venu.Ticketing.API
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddGrpc()
                 .AddCustomDbContext(_configuration)
+                .AddGrpc()
                 .AddMassTransit(_configuration)
                 .AddMediatR();
         }

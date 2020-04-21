@@ -6,9 +6,6 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["Ticketing/Ticketing.API/Ticketing.API.csproj", "Ticketing/Ticketing.API/"]
-COPY ["BuildingBlocks/Shared/Shared.csproj", "BuildingBlocks/Shared/"]
-COPY ["Ticketing/Ticketing.Infrastructure/Ticketing.Infrastructure.csproj", "Ticketing/Ticketing.Infrastructure/"]
-COPY ["Ticketing/Ticketing.Domain/Ticketing.Domain.csproj", "Ticketing/Ticketing.Domain/"]
 RUN dotnet restore "Ticketing/Ticketing.API/Ticketing.API.csproj"
 COPY . .
 WORKDIR "/src/Ticketing/Ticketing.API"
