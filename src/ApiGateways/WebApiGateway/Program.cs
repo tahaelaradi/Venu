@@ -49,7 +49,7 @@ namespace Venu.ApiGateways.WebApiGateway
                     s.AddGrpcJsonTranscoder(() => 
                         new GrpcAssemblyResolver().ConfigGrpcAssembly(
                             s.BuildServiceProvider().GetService<ILogger<GrpcAssemblyResolver>>(),
-                            typeof(Greeter.GreeterBase).Assembly));
+                            typeof(TicketingGrpc.TicketingGrpcBase).Assembly));
                     
                     s.AddAuthentication(options =>
                         {

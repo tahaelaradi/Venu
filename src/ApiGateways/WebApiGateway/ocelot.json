@@ -89,7 +89,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ],
-      "DownstreamPathTemplate": "/greet.Greeter/SayHello",
+      "DownstreamPathTemplate": "/ticketing-service.TicketingGrpc/CreateTicket",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {

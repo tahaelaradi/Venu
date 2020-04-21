@@ -29,9 +29,8 @@ namespace Venu.Ticketing.API
         
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddGrpc();
-            
             services
+                .AddGrpc()
                 .AddCustomDbContext(_configuration)
                 .AddMassTransit(_configuration)
                 .AddMediatR();
@@ -48,7 +47,7 @@ namespace Venu.Ticketing.API
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<GreeterService>();
+                endpoints.MapGrpcService<TicketingService>();
             });
         }
     }
@@ -79,7 +78,17 @@ namespace Venu.Ticketing.API
             
             return services;
         }
-        
+
+        public static IServiceCollection AddGrpc(this IServiceCollection services)
+        {
+            services.AddGrpc(options =>
+            {
+                options.EnableDetailedErrors = true;
+            });
+
+            return services;
+        }
+
         public static IServiceCollection AddMassTransit(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<CustomerCreatedConsumer>();

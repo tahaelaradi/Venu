@@ -1,0 +1,24 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Ticketing.API";
+
+package TicketingService;
+
+service TicketingGrpc {
+    // Creates a ticket
+    rpc CreateTicket(CreateTicketDraftCommand) returns (TicketDraftDTO) {}
+}
+
+// The request message containing ticket input information
+message CreateTicketDraftCommand {
+    int32  customerId = 1;
+    string eventId = 2;
+}
+
+// The response message containing ticket information
+message TicketDraftDTO {
+    string ticketId = 1;
+    google.protobuf.Timestamp createdOn = 2;
+}
