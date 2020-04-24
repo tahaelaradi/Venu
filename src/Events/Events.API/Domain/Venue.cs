@@ -39,6 +39,7 @@ namespace Venu.Events.API.Domain
 
     public class Section
     {
+        public int Ordinal { get; set; }
         public int Rows { get; set; }
         public int Columns { get; set; }
         public double Price { get; set; }

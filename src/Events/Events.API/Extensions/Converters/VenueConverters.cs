@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Venu.BuildingBlocks.Shared.Messaging;
 using VenueSection = Venu.Events.API.Domain.Section;
 using VenueInputSection = Venu.Events.API.Commands.Dtos.Section;
 
@@ -15,5 +16,22 @@ namespace Venu.Events.API.Extensions.Converters
         {
             return AutoMapperConfiguration.Mapper.Map<List<VenueInputSection>, List<VenueSection>>(sectionsDto);
         }    
+        
+        public static IEnumerable<VenueSectionsCreated> ToVenueSectionsCreated(this IEnumerable<VenueSection> venueSections)
+        {
+            foreach (var venueSection in venueSections)
+            {
+                yield return venueSection.ToVenueSectionCreated();
+            }
+        }
+
+        public static VenueSectionsCreated ToVenueSectionCreated(this VenueSection venueSection)
+        {
+            return new VenueSectionsCreated()
+            {
+                Ordinal = venueSection.Ordinal,
+                Price = venueSection.Price
+            };
+        }
     }
 }

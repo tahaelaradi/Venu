@@ -1,21 +1,26 @@
 ﻿using System.Threading.Tasks;
 using Venu.Ticketing.Domain.AggregatesModel.EventAggregate;
+using Venu.Ticketing.Domain.SeedWork;
 
 namespace Venu.Ticketing.Infrastructure.Repositories
 {
-    public class EventRepository
+    public class EventRepository : IEventRepository
     {
         private readonly TicketingContext _context;
+
+        public IUnitOfWork UnitOfWork
+        {
+            get { return _context; }
+        }
 
         public EventRepository(TicketingContext context)
         {
             _context = context;
         }
-        
-        public async Task Add(Event e)
+
+        public Event Add(Event e)
         {
-            _context.Events.Add(e);
-            await _context.SaveChangesAsync();
+            return  _context.Events.Add(e).Entity;
         }
     }
 }

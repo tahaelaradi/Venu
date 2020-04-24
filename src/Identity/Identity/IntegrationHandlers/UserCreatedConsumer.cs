@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MassTransit;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using Venu.BuildingBlocks.Shared.Messaging;
 
 namespace Venu.Identity.IntegrationHandlers
@@ -20,7 +21,7 @@ namespace Venu.Identity.IntegrationHandlers
 
         public async Task Consume(ConsumeContext<UserCreated> context)
         {
-            _logger.LogInformation($"UserCreatedConsumer happened: Username: {context.Message.Username}");
+            Log.Information($"UserCreatedConsumer happened: Username: {context.Message.Username}");
             
             await Task.Delay(10);
             await Task.FromResult(0);

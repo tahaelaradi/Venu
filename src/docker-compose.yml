@@ -65,6 +65,8 @@ services:
       - RABBITMQ_DEFAULT_PASS:guest
       - RABBITMQ_DEFAULT_USER:guest
       - RABBITMQ_DEFAULT_VHOST:venu
+    volumes:
+      - ./data/rabbitmq:/var/lib/rabbitmq/mnesia
 
   webapigateway:
     image: ${DOCKER_REGISTRY-}webapigateway

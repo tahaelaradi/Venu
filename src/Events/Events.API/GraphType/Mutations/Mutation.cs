@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MediatR;
 using Venu.Events.API.Commands;
 using Venu.Events.API.Commands.Dtos;
@@ -11,7 +12,7 @@ namespace Venu.Events.API.GraphType.Mutations
         private readonly IMediator _mediator;
         public Mutation(IMediator mediator)
         {
-            _mediator = mediator;
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         public async Task<EventDto> CreateNewEvent(EventInput eventInput)

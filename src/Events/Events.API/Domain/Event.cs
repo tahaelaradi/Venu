@@ -61,7 +61,6 @@ namespace Venu.Events.API.Domain
             DateTime endDate,
             string venueId,
             string[] tags,
-            bool hasVenue,
             bool isFree,
             Address address,
             Image image
@@ -81,7 +80,6 @@ namespace Venu.Events.API.Domain
                 CreatedOn = DateTime.Now,
                 VenueId = venueId,
                 Tags = tags,
-                HasVenue = hasVenue,
                 IsFree = isFree,
                 Address = address,
                 Image = image

@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MassTransit;
 using MediatR;
@@ -50,7 +51,6 @@ namespace Venu.Events.API.Commands.Handlers
                 request.EventInput.EndDate,
                 venueDraft == null ? string.Empty : venueDraft.Id,
                 request.EventInput.Tags,
-                request.EventInput.HasVenue,
                 request.EventInput.IsFree,
                 request.EventInput.Address.ToContract(),
                 request.EventInput.Image.ToContract()
@@ -60,9 +60,11 @@ namespace Venu.Events.API.Commands.Handlers
 
             await _bus.Publish<EventCreated>(new
             {
-                Id = evenDraft.Id,
-                Name = evenDraft.Name
-            });
+                EventId = evenDraft.Id,
+                VenueId = venueDraft?.Id,
+                Name = evenDraft.Name,
+                VenueSections = venueDraft?.Sections.ToVenueSectionsCreated().ToList()
+            }, cancellationToken);
 
             return new EventDto
             {

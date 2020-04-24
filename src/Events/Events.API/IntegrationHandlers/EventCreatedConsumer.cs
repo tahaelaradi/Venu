@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using Venu.BuildingBlocks.Shared.Messaging;
 
 namespace Venu.Events.API.IntegrationHandlers
@@ -20,7 +21,7 @@ namespace Venu.Events.API.IntegrationHandlers
 
         public async Task Consume(ConsumeContext<EventCreated> context)
         {
-            _logger.LogInformation($"Event created: {context.Message.Name}");
+            Log.Information($"Event created: {context.Message.Name}");
 
             await Task.Delay(10);
             await Task.FromResult(0);

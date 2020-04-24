@@ -33,6 +33,7 @@ namespace Venu.Events.API.GraphType.Types
     {
         public SectionInputType()
         {
+            Field<IntGraphType>("ordinal");
             Field<IntGraphType>("rows");
             Field<IntGraphType>("columns");
             Field<FloatGraphType>("price");

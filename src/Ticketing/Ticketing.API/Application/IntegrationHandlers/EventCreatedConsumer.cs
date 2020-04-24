@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MassTransit;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using Venu.BuildingBlocks.Shared.Messaging;
 using Venu.Ticketing.API.Application.Commands;
+using Venu.Ticketing.API.Extensions.Converters;
 
 namespace Venu.Ticketing.API.Application.IntegrationHandlers
 {
@@ -21,9 +24,14 @@ namespace Venu.Ticketing.API.Application.IntegrationHandlers
 
         public async Task Consume(ConsumeContext<EventCreated> context)
         {
-            _logger.LogInformation($"EventCreatedConsumer happened: Event name: {context.Message.Name}");
-            
-            await _mediator.Send(new CreateEventCommand(new EventInput(context.Message.Id, context.Message.Name)));
+            Log.Information($"EventCreatedConsumer happened: Event name: {context.Message.Name}");
+
+            await _mediator.Send(new CreateEventCommand(
+                context.Message.EventId,
+                context.Message.VenueId,
+                context.Message.Name,
+                context.Message.VenueSections
+            ));
             await Task.FromResult(0);
         }
     }

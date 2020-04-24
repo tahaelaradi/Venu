@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using MassTransit;
 using MassTransit.AspNetCoreIntegration;
 using MediatR;
@@ -67,6 +68,7 @@ namespace Venu.Ticketing.API
                 {
                     options.UseNpgsql(connectionString, npgsqlOptionsAction: sqlOptions =>
                     {
+                        sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
                         sqlOptions.EnableRetryOnFailure(maxRetryCount: 3);
                     });
                 });

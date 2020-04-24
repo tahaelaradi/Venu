@@ -14,7 +14,6 @@ using System.Collections.Generic;
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string[] Tags { get; set; }
-        public bool HasVenue { get; set; }
         public bool IsFree { get; set; }
         public Venue Venue { get; set; }
         public Address Address { get; set; }
@@ -46,6 +45,7 @@ using System.Collections.Generic;
 
     public class Section
     {
+        public int Ordinal { get; set; }
         public int Rows { get; set; }
         public int Columns { get; set; }
         public double Price { get; set; }

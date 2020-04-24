@@ -2,11 +2,10 @@
 using System.Threading.Tasks;
 using MediatR;
 using Serilog;
-using Venu.Ticketing.API.Application.Commands;
 using Venu.Ticketing.Domain.AggregatesModel.CustomerAggregate;
 using Venu.Ticketing.Infrastructure.Repositories;
 
-namespace Venu.Ticketing.API.Application.DomainEventHandlers
+namespace Venu.Ticketing.API.Application.Commands
 {
     public class CreateCustomerHandler : IRequestHandler<CreateCustomerCommand>
     {
@@ -17,10 +16,10 @@ namespace Venu.Ticketing.API.Application.DomainEventHandlers
             _customerRepository = customerRepository;
         }
         
-        public async Task<Unit> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateCustomerCommand message, CancellationToken cancellationToken)
         {
-            var customer = new Customer(request.CustomerInput.Id, request.CustomerInput.Username);
-            Log.Information($"Creating Customer: {customer.Username}");
+            Log.Information($"Creating Customer: {message.Username}");
+            var customer = new Customer(message.Id, message.Username);
             
             await _customerRepository.Add(customer);
             return Unit.Value;

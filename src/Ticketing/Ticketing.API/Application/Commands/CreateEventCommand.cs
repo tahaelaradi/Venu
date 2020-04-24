@@ -1,26 +1,48 @@
-﻿using MediatR;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using MediatR;
+using Venu.BuildingBlocks.Shared.Messaging;
+using Venu.Ticketing.API.Extensions.Converters;
 
 namespace Venu.Ticketing.API.Application.Commands
 {
+    [DataContract]
     public class CreateEventCommand : IRequest
     {
-        public CreateEventCommand(EventInput eventInput)
-        {
-            this.EventInput = eventInput;
-        }
-        
-        public EventInput EventInput { get; private set; }
-    }
-    
-    public class EventInput
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
+        [DataMember] 
+        private readonly List<VenueSectionsInput> _venueSections;
 
-        public EventInput(string id, string name)
+        [DataMember] 
+        public string EventId { get; set; }
+        
+        [DataMember] 
+        public string VenueId { get; set; }
+
+        [DataMember] 
+        public string Name { get; set; }
+        
+        [DataMember] 
+        public IEnumerable<VenueSectionsInput> VenueSections => _venueSections;
+        
+        public CreateEventCommand()
         {
-            Id = id;
-            Name = name;
+            _venueSections = new List<VenueSectionsInput>();
         }
+
+        public CreateEventCommand(string eventId, string venueId, string name, List<VenueSectionsCreated> venueSections) : this()
+        {
+            EventId = eventId;
+            VenueId = venueId;
+            Name = name;
+            _venueSections = venueSections.ToVenueSectionsInput().ToList();
+        }
+    }
+
+    public class VenueSectionsInput
+    {
+        public string VenueId { get; set; }
+        public int Ordinal { get; set; }
+        public double Price { get; set; }
     }
 }

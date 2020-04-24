@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
 using Venu.Events.API.Queries;
@@ -12,7 +13,7 @@ namespace Venu.Events.API.GraphType.Queries
 
         public Query(IMediator mediator)
         {
-            _mediator = mediator;
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         public async Task<IEnumerable<EventDto>> GetEvents()
