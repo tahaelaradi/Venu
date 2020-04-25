@@ -1,6 +1,6 @@
 ﻿﻿using System.Linq.Expressions;
 
- namespace Venu.Events.API.Helpers
+ namespace Venu.Events.API.Infrastructure.Helpers
 {
     internal class ParameterReplaceVisitor : ExpressionVisitor
     {

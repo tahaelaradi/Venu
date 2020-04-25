@@ -1,4 +1,4 @@
-﻿﻿namespace Venu.Events.API.Common
+﻿﻿namespace Venu.Events.API.Infrastructure.Common
 {
     public class GlobalConfiguration
     {

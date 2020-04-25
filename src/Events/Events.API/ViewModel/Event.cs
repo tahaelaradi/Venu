@@ -1,8 +1,8 @@
-﻿﻿using System;
+﻿using System;
 
- namespace Venu.Events.API.Queries.Dtos
+namespace Venu.Events.API.ViewModel
 {
-    public class EventDto
+    public class Event
     {
         public string Id { get; set; }
         public string Name { get; set; }
@@ -22,17 +22,6 @@
         public Address Address { get; set; }
         public int Likes { get; set; }
         public int Shares { get; set; }
-    }
-    
-    public class Address
-    {
-        public string City { get; set; }
-        public string State { get; set; }
-        public string Country { get; set; }
-        public string PostalCode { get; set; }
-        public string Longitude { get; set; }
-        public string Latitude { get; set; }
-        public string AddressDisplayName { get; set; }
     }
 
     public enum Status

@@ -2,8 +2,8 @@
 using MongoDB.Driver;
 using MongoDbGenericRepository;
 using MongoDbGenericRepository.Models;
-using Venu.Events.API.Common;
-using Venu.Events.API.Domain;
+using Venu.Events.API.Infrastructure.Common;
+using Venu.Events.API.Models;
 
 namespace Venu.Events.API.DataAccess
 {

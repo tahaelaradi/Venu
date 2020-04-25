@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 using MassTransit;
 using MediatR;
 using Venu.BuildingBlocks.Shared.Messaging;
-using Venu.Events.API.Domain;
-using Venu.Events.API.Extensions.Converters;
-using Venu.Events.API.Queries.Dtos;
+using Venu.Events.API.Infrastructure.Extensions.Converters;
+using Venu.Events.API.Models;
+using Event = Venu.Events.API.ViewModel.Event;
 
 namespace Venu.Events.API.Commands.Handlers
 {
-    public class CreateEventHandler : IRequestHandler<CreateEventCommand, EventDto>
+    public class CreateEventHandler : IRequestHandler<CreateEventCommand, Event>
     {
         private readonly IBusControl _bus;
 
@@ -28,7 +28,7 @@ namespace Venu.Events.API.Commands.Handlers
             _venueRepository = venueRepository;
         }
 
-        public async Task<EventDto> Handle(CreateEventCommand request, CancellationToken cancellationToken)
+        public async Task<Event> Handle(CreateEventCommand request, CancellationToken cancellationToken)
         {
             var venueDraft = request.EventInput.Venue == null
                 ? null
@@ -39,7 +39,7 @@ namespace Venu.Events.API.Commands.Handlers
 
             if (request.EventInput.Venue != null) await _venueRepository.AddOneAsync(venueDraft);
 
-            var evenDraft = Event.CreateDraft
+            var evenDraft = Models.Event.CreateDraft
             (
                 request.EventInput.Name,
                 request.EventInput.Type,
@@ -52,7 +52,7 @@ namespace Venu.Events.API.Commands.Handlers
                 venueDraft == null ? string.Empty : venueDraft.Id,
                 request.EventInput.Tags,
                 request.EventInput.IsFree,
-                request.EventInput.Address.ToContract(),
+                EventConverters.ToContract(request.EventInput.Address),
                 request.EventInput.Image.ToContract()
             );
 
@@ -66,7 +66,7 @@ namespace Venu.Events.API.Commands.Handlers
                 VenueSections = venueDraft?.Sections.ToVenueSectionsCreated().ToList()
             }, cancellationToken);
 
-            return new EventDto
+            return new Event
             {
                 Id = evenDraft.Id,
                 Name = evenDraft.Name

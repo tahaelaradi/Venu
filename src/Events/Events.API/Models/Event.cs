@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDbGenericRepository.Attributes;
 using MongoDbGenericRepository.Models;
 
-namespace Venu.Events.API.Domain
+namespace Venu.Events.API.Models
 {
     [CollectionName("event")]
     [BsonIgnoreExtraElements]

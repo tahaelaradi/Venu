@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using Venu.Events.API.Domain;
-using Venu.Events.API.Queries.Dtos;
-using EventAddress = Venu.Events.API.Domain.Address;
-using EventInputAddress = Venu.Events.API.Commands.Dtos.Address;
-using VenueSections = Venu.Events.API.Domain.Section;
-using VenueInputSections = Venu.Events.API.Commands.Dtos.Section;
+using Event = Venu.Events.API.ViewModel.Event;
+using EventAddress = Venu.Events.API.Models.Address;
+using EventInputAddress = Venu.Events.API.ViewModel.Address;
+using VenueSections = Venu.Events.API.Models.Section;
+using VenueInputSections = Venu.Events.API.ViewModel.Section;
 
-namespace Venu.Events.API.Extensions.Converters
+namespace Venu.Events.API.Infrastructure.Extensions.Converters
 {
     /// <summary>
     /// AutoMapper configuration
@@ -24,7 +23,7 @@ namespace Venu.Events.API.Extensions.Converters
                 new MapperConfiguration(
                     cfg =>
                     {
-                        cfg.CreateMap<EventDto, Event>().ReverseMap();
+                        cfg.CreateMap<Event, Models.Event>().ReverseMap();
                         cfg.CreateMap<EventInputAddress, EventAddress>();
                         cfg.CreateMap<VenueInputSections, VenueSections>();
                     });

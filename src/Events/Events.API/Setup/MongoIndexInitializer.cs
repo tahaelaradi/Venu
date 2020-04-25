@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Venu.Events.API.Domain;
+using Venu.Events.API.Models;
+
 // using Event = Venu.Events.API.Domain.Event;
 // using IRepository = Venu.Events.API.Domain.IRepository;
 

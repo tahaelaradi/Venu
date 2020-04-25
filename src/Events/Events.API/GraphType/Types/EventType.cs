@@ -1,9 +1,9 @@
 ﻿using GraphQL.Types;
-using Venu.Events.API.Queries.Dtos;
+using Venu.Events.API.ViewModel;
 
 namespace Venu.Events.API.GraphType.Types
 {
-    public class EventType : ObjectGraphType<EventDto>
+    public class EventType : ObjectGraphType<Event>
     {
         public EventType()
         {

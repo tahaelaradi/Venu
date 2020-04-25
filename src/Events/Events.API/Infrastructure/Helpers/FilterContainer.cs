@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Venu.Events.API.Helpers
+namespace Venu.Events.API.Infrastructure.Helpers
 {
     public class FilterContainer<T>
     {

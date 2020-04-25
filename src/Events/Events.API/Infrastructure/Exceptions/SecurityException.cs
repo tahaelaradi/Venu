@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Venu.Events.API.Exceptions
+namespace Venu.Events.API.Infrastructure.Exceptions
 {
     public class SecurityException : Exception
     {

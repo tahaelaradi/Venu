@@ -4,14 +4,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Venu.Events.API.Domain;
-using Venu.Events.API.Extensions.Converters;
-using Venu.Events.API.Helpers;
-using Venu.Events.API.Queries.Dtos;
+using Venu.Events.API.Infrastructure.Extensions.Converters;
+using Venu.Events.API.Infrastructure.Helpers;
+using Venu.Events.API.Models;
+using Event = Venu.Events.API.ViewModel.Event;
 
 namespace Venu.Events.API.Queries.Handlers
 {
-    public class FindEventsBySearch : IRequestHandler<FindEventsBySearchQuery, IEnumerable<EventDto>>
+    public class FindEventsBySearch : IRequestHandler<FindEventsBySearchQuery, IEnumerable<Event>>
     {
         private readonly IRepository _eventRepository;
         
@@ -20,9 +20,9 @@ namespace Venu.Events.API.Queries.Handlers
             _eventRepository = eventRepository ?? throw new ArgumentNullException(nameof(eventRepository));            
         }
 
-        public async Task<IEnumerable<EventDto>> Handle(FindEventsBySearchQuery request,  CancellationToken cancellationToken)
+        public async Task<IEnumerable<Event>> Handle(FindEventsBySearchQuery request,  CancellationToken cancellationToken)
         {
-            var filterContainer = new FilterContainer<Event>();
+            var filterContainer = new FilterContainer<Models.Event>();
             
             if (request.Name != null)
                 filterContainer.AddFilterCondition(p => p.Name == request.Name);

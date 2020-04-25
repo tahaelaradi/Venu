@@ -2,7 +2,7 @@
 using MongoDbGenericRepository;
 using MongoDbGenericRepository.Models;
 
-namespace Venu.Events.API.Domain
+namespace Venu.Events.API.Models
 {
     public interface IMongoAccessor
     {

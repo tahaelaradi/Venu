@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Venu.BuildingBlocks.Shared.Messaging;
-using VenueSection = Venu.Events.API.Domain.Section;
-using VenueInputSection = Venu.Events.API.Commands.Dtos.Section;
+using VenueSection = Venu.Events.API.Models.Section;
+using VenueInputSection = Venu.Events.API.ViewModel.Section;
 
-namespace Venu.Events.API.Extensions.Converters
+namespace Venu.Events.API.Infrastructure.Extensions.Converters
 {
     public static class VenueConverters
     {

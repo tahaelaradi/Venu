@@ -1,7 +1,7 @@
 ﻿using GraphQL.Types;
 using MediatR;
-using Venu.Events.API.Commands.Dtos;
 using Venu.Events.API.GraphType.Types;
+using Venu.Events.API.ViewModel;
 
 namespace Venu.Events.API.GraphType.Mutations
 {

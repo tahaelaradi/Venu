@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDbGenericRepository.Attributes;
 using MongoDbGenericRepository.Models;
 
-namespace Venu.Events.API.Domain
+namespace Venu.Events.API.Models
 {
     [CollectionName("venue")]
     [BsonIgnoreExtraElements]
