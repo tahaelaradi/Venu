@@ -19,7 +19,9 @@ namespace Venu.Ticketing.API.Extensions.Converters
             return new VenueSectionsInput()
             {
                 Ordinal = venueSection.Ordinal,
-                Price = venueSection.Price
+                Price = venueSection.Price,
+                Rows = venueSection.Rows,
+                Columns = venueSection.Columns
             };
         }
     }

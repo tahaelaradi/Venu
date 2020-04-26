@@ -14,5 +14,7 @@ namespace Venu.BuildingBlocks.Shared.Messaging
     {
         public int Ordinal { get; set; }
         public double Price { get; set; }
+        public int Rows { get; set; }
+        public int Columns { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace Venu.Ticketing.Domain.AggregatesModel.EventAggregate
             _venueSections = new List<VenueSection>();
         }
         
-        public void AddVenueSection(string venueId, int ordinal, double price)
+        public void AddVenueSection(string venueId, int ordinal, double price, int rows, int columns)
         {
             var existingVenueSectionForEvent = _venueSections.SingleOrDefault(s => s.VenueId == venueId);
 
@@ -41,7 +41,7 @@ namespace Venu.Ticketing.Domain.AggregatesModel.EventAggregate
             }
             else
             {
-                var venueSection = new VenueSection(venueId, ordinal, price);
+                var venueSection = new VenueSection(venueId, ordinal, price, rows, columns);
                 _venueSections.Add(venueSection);
             }
         }

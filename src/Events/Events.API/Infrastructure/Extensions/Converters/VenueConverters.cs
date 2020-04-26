@@ -30,7 +30,9 @@ namespace Venu.Events.API.Infrastructure.Extensions.Converters
             return new VenueSectionsCreated()
             {
                 Ordinal = venueSection.Ordinal,
-                Price = venueSection.Price
+                Price = venueSection.Price,
+                Rows = venueSection.Rows,
+                Columns = venueSection.Columns
             };
         }
     }

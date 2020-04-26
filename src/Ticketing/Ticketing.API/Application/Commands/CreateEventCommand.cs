@@ -44,5 +44,7 @@ namespace Venu.Ticketing.API.Application.Commands
         public string VenueId { get; set; }
         public int Ordinal { get; set; }
         public double Price { get; set; }
+        public int Rows { get; set; }
+        public int Columns { get; set; }
     }
 }

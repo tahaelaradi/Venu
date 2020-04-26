@@ -24,7 +24,7 @@ namespace Venu.Ticketing.API.Application.Commands
             
             foreach (var section in message.VenueSections)
             {
-                e.AddVenueSection(message.VenueId, section.Ordinal, section.Price);
+                e.AddVenueSection(message.VenueId, section.Ordinal, section.Price, section.Rows, section.Columns);
             }
             
             _eventRepository.Add(e);
