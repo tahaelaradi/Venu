@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace Venu.Ticketing.API.Data.Migrations
+namespace Venu.Ticketing.API.Infrastructure.Migrations
 {
     public partial class AddVenueSectionTable : Migration
     {
@@ -11,14 +12,13 @@ namespace Venu.Ticketing.API.Data.Migrations
                 name: "VenueSection",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    VenueSectionId = table.Column<string>(nullable: false),
                     VenueId = table.Column<string>(nullable: true),
                     EventId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VenueSection", x => x.Id);
+                    table.PrimaryKey("PK_VenueSection", x => x.VenueSectionId);
                     table.ForeignKey(
                         name: "FK_VenueSection_Event_EventId",
                         column: x => x.EventId,
@@ -36,7 +36,7 @@ namespace Venu.Ticketing.API.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "VenueSection");
+                name: "Event");
         }
     }
 }

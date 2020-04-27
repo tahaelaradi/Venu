@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Venu.Ticketing.Domain.AggregatesModel.CustomerAggregate;
 using Venu.Ticketing.Domain.AggregatesModel.EventAggregate;
+using Venu.Ticketing.Domain.AggregatesModel.SeatingAggregate;
 using Venu.Ticketing.Domain.SeedWork;
 
 namespace Venu.Ticketing.Infrastructure
@@ -15,11 +16,13 @@ namespace Venu.Ticketing.Infrastructure
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<VenueSection> VenueSections { get; set; }
+        public DbSet<Seat> Seats { get; set; }
 
         private readonly IMediator _mediator;
         
-        public TicketingContext(DbContextOptions<TicketingContext> options) : base(options)
+        public TicketingContext(DbContextOptions<TicketingContext> options, IMediator mediator) : base(options)
         {
+            _mediator = mediator;
             System.Diagnostics.Debug.WriteLine("TicketingContext :: ctor => " + this.GetHashCode());
         }
         

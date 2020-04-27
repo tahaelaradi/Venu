@@ -14,6 +14,8 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Autofac" Version="4.9.4" />
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.1" />
         <PackageReference Include="Grpc.AspNetCore" Version="2.24.0" />
         <PackageReference Include="MassTransit.AspNetCore" Version="6.0.0" />
         <PackageReference Include="MassTransit.RabbitMQ" Version="6.0.0" />
@@ -33,7 +35,6 @@
 
     <ItemGroup>
       <Folder Include="Application\Queries" />
-      <Folder Include="Infrastructure" />
     </ItemGroup>
 
 </Project>

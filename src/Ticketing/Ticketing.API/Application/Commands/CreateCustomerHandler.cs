@@ -9,9 +9,9 @@ namespace Venu.Ticketing.API.Application.Commands
 {
     public class CreateCustomerHandler : IRequestHandler<CreateCustomerCommand>
     {
-        private readonly CustomerRepository _customerRepository;
+        private readonly ICustomerRepository _customerRepository;
         
-        public CreateCustomerHandler(CustomerRepository customerRepository)
+        public CreateCustomerHandler(ICustomerRepository customerRepository)
         {
             _customerRepository = customerRepository;
         }

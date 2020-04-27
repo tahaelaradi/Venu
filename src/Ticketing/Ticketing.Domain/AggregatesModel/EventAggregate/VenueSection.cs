@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Venu.Ticketing.Domain.Events;
 using Venu.Ticketing.Domain.Exceptions;
@@ -23,13 +24,14 @@ namespace Venu.Ticketing.Domain.AggregatesModel.EventAggregate
         
         public VenueSection(string venueId, int ordinal, double price, int rows, int columns)
         {
+            Id = Guid.NewGuid().ToString();
             VenueId = venueId;
             _ordinal = ordinal;
             _price = price;
             _rows = rows;
             _columns = columns;
 
-            AddVenueSectionCreatedDomainEvent(venueId, ordinal, price, rows, columns);
+            this.AddVenueSectionCreatedDomainEvent(venueId, ordinal, price, rows, columns);
         }
         
         public int GetOrdinal() => _ordinal;

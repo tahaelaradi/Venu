@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Venu.Ticketing.API.Data.Migrations
+namespace Venu.Ticketing.API.Infrastructure.Migrations
 {
     public partial class AddEventTable : Migration
     {

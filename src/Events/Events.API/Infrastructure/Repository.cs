@@ -5,7 +5,7 @@ using MongoDbGenericRepository.Models;
 using Venu.Events.API.Infrastructure.Common;
 using Venu.Events.API.Models;
 
-namespace Venu.Events.API.DataAccess
+namespace Venu.Events.API.Infrastructure
 {
     public class Repository : BaseMongoRepository<string>, IRepository, IMongoAccessor
     {

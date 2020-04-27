@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Venu.Ticketing.Infrastructure;
 
-namespace Venu.Ticketing.API.Data.Migrations
+namespace Venu.Ticketing.API.Infrastructure.Migrations
 {
     [DbContext(typeof(TicketingContext))]
-    [Migration("20200422202441_AddVenueSectionTable")]
+    [Migration("20200427174010_AddVenueSectionTable")]
     partial class AddVenueSectionTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,10 +66,9 @@ namespace Venu.Ticketing.API.Data.Migrations
 
             modelBuilder.Entity("Venu.Ticketing.Domain.AggregatesModel.EventAggregate.VenueSection", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                    b.Property<string>("Id")
+                        .HasColumnName("VenueSectionId")
+                        .HasColumnType("text");
 
                     b.Property<string>("EventId")
                         .HasColumnType("text");

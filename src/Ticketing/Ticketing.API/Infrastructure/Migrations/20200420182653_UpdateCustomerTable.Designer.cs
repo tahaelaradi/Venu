@@ -5,10 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Venu.Ticketing.API.Data;
 using Venu.Ticketing.Infrastructure;
 
-namespace Venu.Ticketing.API.Data.Migrations
+namespace Venu.Ticketing.API.Infrastructure.Migrations
 {
     [DbContext(typeof(TicketingContext))]
     [Migration("20200420182653_UpdateCustomerTable")]

@@ -31,8 +31,8 @@ namespace Venu.Ticketing.API
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddCustomDbContext(_configuration)
                 .AddGrpc()
+                .AddCustomDbContext(_configuration)
                 .AddMassTransit(_configuration)
                 .AddMediatR();
         }
@@ -77,6 +77,7 @@ namespace Venu.Ticketing.API
 
             services.AddTransient<CustomerRepository>();
             services.AddTransient<EventRepository>();
+            services.AddTransient<SeatingRepository>();
             
             return services;
         }

@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Venu.Ticketing.Infrastructure;
 
-namespace Venu.Ticketing.API.Data.Migrations
+namespace Venu.Ticketing.API.Infrastructure.Migrations
 {
     [DbContext(typeof(TicketingContext))]
-    [Migration("20200426045609_UpdateVenueSection")]
-    partial class UpdateVenueSection
+    [Migration("20200427174309_AddSeatTable")]
+    partial class AddSeatTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,9 +66,9 @@ namespace Venu.Ticketing.API.Data.Migrations
 
             modelBuilder.Entity("Venu.Ticketing.Domain.AggregatesModel.EventAggregate.VenueSection", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<string>("Id")
                         .HasColumnName("VenueSectionId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("text");
 
                     b.Property<string>("EventId")
                         .HasColumnType("text");
@@ -81,6 +81,36 @@ namespace Venu.Ticketing.API.Data.Migrations
                     b.HasIndex("EventId");
 
                     b.ToTable("VenueSection");
+                });
+
+            modelBuilder.Entity("Venu.Ticketing.Domain.AggregatesModel.SeatingAggregate.Seat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("Column")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsOccupied")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Row")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdateOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("VenueSectionId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Seat");
                 });
 
             modelBuilder.Entity("Venu.Ticketing.Domain.AggregatesModel.EventAggregate.VenueSection", b =>

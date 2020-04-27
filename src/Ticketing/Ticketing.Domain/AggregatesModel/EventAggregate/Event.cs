@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using Serilog;
 using Venu.Ticketing.Domain.SeedWork;
 
 namespace Venu.Ticketing.Domain.AggregatesModel.EventAggregate
@@ -32,18 +33,8 @@ namespace Venu.Ticketing.Domain.AggregatesModel.EventAggregate
         
         public void AddVenueSection(string venueId, int ordinal, double price, int rows, int columns)
         {
-            var existingVenueSectionForEvent = _venueSections.SingleOrDefault(s => s.VenueId == venueId);
-
-            if (existingVenueSectionForEvent != null)
-            {
-                existingVenueSectionForEvent.SetNewOrdinal(ordinal);
-                existingVenueSectionForEvent.SetNewPrice(price);
-            }
-            else
-            {
-                var venueSection = new VenueSection(venueId, ordinal, price, rows, columns);
-                _venueSections.Add(venueSection);
-            }
+            var venueSection = new VenueSection(venueId, ordinal, price, rows, columns);
+            _venueSections.Add(venueSection);
         }
     }
 }
