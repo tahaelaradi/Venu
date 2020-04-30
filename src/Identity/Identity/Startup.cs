@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
-using Venu.BuildingBlocks.Shared;
+using Venu.BuildingBlocks.Shared.Extensions;
 using Venu.BuildingBlocks.Shared.Types;
 using Venu.Identity.DataAccess;
 using Venu.Identity.Helpers;

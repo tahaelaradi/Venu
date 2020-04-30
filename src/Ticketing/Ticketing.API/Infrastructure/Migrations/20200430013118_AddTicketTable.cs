@@ -1,36 +1,42 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Venu.Ticketing.API.Infrastructure.Migrations
 {
-    public partial class AddSeatTable : Migration
+    public partial class AddTicketTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.RenameColumn(
+                name: "Id",
+                table: "Seat",
+                newName: "SeatId");
+
             migrationBuilder.CreateTable(
-                name: "Seat",
+                name: "Ticket",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    VenueSectionId = table.Column<string>(nullable: true),
-                    Row = table.Column<int>(nullable: false),
-                    Column = table.Column<int>(nullable: false),
-                    IsOccupied = table.Column<bool>(nullable: false),
+                    TicketId = table.Column<string>(nullable: false),
+                    SeatId = table.Column<int>(nullable: false),
+                    CustomerId = table.Column<int>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     UpdateOn = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Seat", x => x.Id);
+                    table.PrimaryKey("PK_Ticket", x => x.TicketId);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Seat");
+                name: "Ticket");
+
+            migrationBuilder.RenameColumn(
+                name: "SeatId",
+                table: "Seat",
+                newName: "Id");
         }
     }
 }

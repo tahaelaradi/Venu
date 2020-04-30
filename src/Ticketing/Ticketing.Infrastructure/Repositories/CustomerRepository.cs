@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Venu.Ticketing.Domain.AggregatesModel.CustomerAggregate;
 using Venu.Ticketing.Domain.SeedWork;
 
@@ -22,6 +24,22 @@ namespace Venu.Ticketing.Infrastructure.Repositories
         {
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<Customer> GetAsync(int customerId)
+        {
+            var customer = await _context
+                .Customers
+                .FirstOrDefaultAsync(s => s.Id == customerId);
+            
+            if (customer == null)
+            {
+                customer = _context
+                    .Customers
+                    .Local.FirstOrDefault(s => s.Id == customerId);
+            }
+            
+            return customer;
         }
     }
 }

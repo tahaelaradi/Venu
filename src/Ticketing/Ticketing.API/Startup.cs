@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using Venu.BuildingBlocks.Shared;
+using Venu.BuildingBlocks.Shared.Extensions;
 using Venu.BuildingBlocks.Shared.Types;
 using Venu.Ticketing.API.Application.IntegrationHandlers;
 using Venu.Ticketing.API.Grpc;
@@ -78,6 +78,7 @@ namespace Venu.Ticketing.API
             services.AddTransient<CustomerRepository>();
             services.AddTransient<EventRepository>();
             services.AddTransient<SeatingRepository>();
+            services.AddTransient<TicketRepository>();
             
             return services;
         }

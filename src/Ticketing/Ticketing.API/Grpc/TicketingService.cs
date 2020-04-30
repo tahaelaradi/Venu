@@ -1,28 +1,38 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
-using Microsoft.Extensions.Logging;
+using MediatR;
+using Serilog;
 using Ticketing.API;
+using AppCommand = Venu.Ticketing.API.Application.Commands;
+using CreateTicketCommand = Ticketing.API.CreateTicketCommand;
 
 namespace Venu.Ticketing.API.Grpc
 {
     public class TicketingService : TicketingGrpc.TicketingGrpcBase
     {
-        private readonly ILogger<TicketingService> _logger;
+        private readonly IMediator _mediator;
 
-        public TicketingService(ILogger<TicketingService> logger)
+        public TicketingService(IMediator mediator)
         {
-            _logger = logger;
+            _mediator = mediator;
         }
         
-        public override Task<TicketDraftDTO> CreateTicket(CreateTicketDraftCommand request, ServerCallContext context)
+        public override async Task<TicketDTO> CreateTicket(CreateTicketCommand createTicketDraft, ServerCallContext context)
         {
-            return Task.FromResult(new TicketDraftDTO
+            Log.Information("Begin grpc call from method {Method} for ordering get order draft {CreateOrderDraftCommand}", context.Method, createTicketDraft);
+
+            var command = new AppCommand.CreateTicketCommand(createTicketDraft.SeatId, createTicketDraft.CustomerId);
+
+            try
             {
-                TicketId = "1234",
-                CreatedOn = Timestamp.FromDateTime(DateTime.UtcNow)
-            });
+                var data = await _mediator.Send(command);
+                return data;
+            }
+            catch (Exception e)
+            {
+                throw new RpcException(new Status(StatusCode.Cancelled, $"error: {e}"));
+            }
         }
     }
 }

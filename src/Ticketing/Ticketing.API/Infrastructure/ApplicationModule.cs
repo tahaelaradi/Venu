@@ -2,6 +2,7 @@
 using Venu.Ticketing.Domain.AggregatesModel.CustomerAggregate;
 using Venu.Ticketing.Domain.AggregatesModel.EventAggregate;
 using Venu.Ticketing.Domain.AggregatesModel.SeatingAggregate;
+using Venu.Ticketing.Domain.AggregatesModel.TicketAggregate;
 using Venu.Ticketing.Infrastructure.Repositories;
 
 namespace Venu.Ticketing.API.Infrastructure
@@ -27,6 +28,10 @@ namespace Venu.Ticketing.API.Infrastructure
             builder.RegisterType<SeatingRepository>()
                .As<ISeatingRepository>()
                .InstancePerLifetimeScope();
+            
+            builder.RegisterType<TicketRepository>()
+                .As<ITicketRepository>()
+                .InstancePerLifetimeScope();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Serilog;
 using Venu.Ticketing.Domain.Events;
 using Venu.Ticketing.Domain.Exceptions;
 using Venu.Ticketing.Domain.SeedWork;
@@ -31,7 +32,7 @@ namespace Venu.Ticketing.Domain.AggregatesModel.EventAggregate
             _rows = rows;
             _columns = columns;
 
-            this.AddVenueSectionCreatedDomainEvent(venueId, ordinal, price, rows, columns);
+            AddVenueSectionCreatedDomainEvent(venueId, ordinal, price, rows, columns);
         }
         
         public int GetOrdinal() => _ordinal;
@@ -52,6 +53,7 @@ namespace Venu.Ticketing.Domain.AggregatesModel.EventAggregate
         
         private void AddVenueSectionCreatedDomainEvent(string venueId, int ordinal, double price, int rows, int columns)
         {
+            Log.Information($"VenueSectionId >> {this.Id}");
             var orderStartedDomainEvent = new VenueSectionCreatedDomainEvent(this, venueId, ordinal, price, rows, columns);
             AddDomainEvent(orderStartedDomainEvent);
         }

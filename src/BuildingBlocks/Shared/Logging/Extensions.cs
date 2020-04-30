@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Serilog;
+using Venu.BuildingBlocks.Shared.Extensions;
 using Venu.BuildingBlocks.Shared.Types;
 
 namespace Venu.BuildingBlocks.Shared.Logging

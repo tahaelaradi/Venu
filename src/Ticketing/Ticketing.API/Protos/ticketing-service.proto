@@ -8,17 +8,17 @@ package TicketingService;
 
 service TicketingGrpc {
     // Creates a ticket
-    rpc CreateTicket(CreateTicketDraftCommand) returns (TicketDraftDTO) {}
+    rpc CreateTicket(CreateTicketCommand) returns (TicketDTO) {}
 }
 
 // The request message containing ticket input information
-message CreateTicketDraftCommand {
-    int32  customerId = 1;
-    string eventId = 2;
+message CreateTicketCommand {
+    int32 customerId = 1;
+    int32 seatId = 2;
 }
 
 // The response message containing ticket information
-message TicketDraftDTO {
+message TicketDTO {
     string ticketId = 1;
     google.protobuf.Timestamp createdOn = 2;
 }

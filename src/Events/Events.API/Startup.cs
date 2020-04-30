@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
-using Venu.BuildingBlocks.Shared;
+using Venu.BuildingBlocks.Shared.Extensions;
 using Venu.BuildingBlocks.Shared.Types;
 using Venu.Events.API.Setup;
 using Venu.Events.API.GraphType.AppSchema;

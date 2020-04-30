@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Venu.BuildingBlocks.Shared
+namespace Venu.BuildingBlocks.Shared.Extensions
 {
     public static class Extensions
     {
