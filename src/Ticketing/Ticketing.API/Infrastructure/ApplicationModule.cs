@@ -3,6 +3,7 @@ using Venu.Ticketing.Domain.AggregatesModel.CustomerAggregate;
 using Venu.Ticketing.Domain.AggregatesModel.EventAggregate;
 using Venu.Ticketing.Domain.AggregatesModel.SeatingAggregate;
 using Venu.Ticketing.Domain.AggregatesModel.TicketAggregate;
+using Venu.Ticketing.Domain.AggregatesModel.VenueAggregate;
 using Venu.Ticketing.Infrastructure.Repositories;
 
 namespace Venu.Ticketing.API.Infrastructure
@@ -17,12 +18,16 @@ namespace Venu.Ticketing.API.Infrastructure
 
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<CustomerRepository>()
+                .As<ICustomerRepository>()
+                .InstancePerLifetimeScope();
+            
             builder.RegisterType<EventRepository>()
                 .As<IEventRepository>()
                 .InstancePerLifetimeScope();
-
-            builder.RegisterType<CustomerRepository>()
-                .As<ICustomerRepository>()
+            
+            builder.RegisterType<VenueRepository>()
+                .As<IVenueRepository>()
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<SeatingRepository>()

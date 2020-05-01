@@ -37,7 +37,7 @@ namespace Venu.Ticketing.API.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("Venu.Ticketing.Domain.AggregatesModel.EventAggregate.Event", b =>
@@ -59,34 +59,13 @@ namespace Venu.Ticketing.API.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Event");
-                });
-
-            modelBuilder.Entity("Venu.Ticketing.Domain.AggregatesModel.EventAggregate.VenueSection", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("VenueSectionId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("EventId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("VenueId")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("VenueSection");
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("Venu.Ticketing.Domain.AggregatesModel.SeatingAggregate.Seat", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("SeatId")
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
@@ -102,21 +81,20 @@ namespace Venu.Ticketing.API.Infrastructure.Migrations
                     b.Property<int>("Row")
                         .HasColumnType("integer");
 
+                    b.Property<string>("SectionId")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("UpdateOn")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("VenueSectionId")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Seat");
+                    b.ToTable("Seats");
                 });
 
             modelBuilder.Entity("Venu.Ticketing.Domain.AggregatesModel.TicketAggregate.Ticket", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnName("TicketId")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
@@ -133,14 +111,60 @@ namespace Venu.Ticketing.API.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ticket");
+                    b.ToTable("Tickets");
                 });
 
-            modelBuilder.Entity("Venu.Ticketing.Domain.AggregatesModel.EventAggregate.VenueSection", b =>
+            modelBuilder.Entity("Venu.Ticketing.Domain.AggregatesModel.VenueAggregate.Section", b =>
                 {
-                    b.HasOne("Venu.Ticketing.Domain.AggregatesModel.EventAggregate.Event", null)
-                        .WithMany("VenueSections")
-                        .HasForeignKey("EventId");
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Columns")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Ordinal")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("Rows")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("VenueId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VenueId");
+
+                    b.ToTable("Sections");
+                });
+
+            modelBuilder.Entity("Venu.Ticketing.Domain.AggregatesModel.VenueAggregate.Venue", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("EventId")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdateOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Venues");
+                });
+
+            modelBuilder.Entity("Venu.Ticketing.Domain.AggregatesModel.VenueAggregate.Section", b =>
+                {
+                    b.HasOne("Venu.Ticketing.Domain.AggregatesModel.VenueAggregate.Venue", null)
+                        .WithMany("Sections")
+                        .HasForeignKey("VenueId");
                 });
 #pragma warning restore 612, 618
         }

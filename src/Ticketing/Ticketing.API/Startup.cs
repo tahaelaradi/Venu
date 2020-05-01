@@ -77,6 +77,7 @@ namespace Venu.Ticketing.API
 
             services.AddTransient<CustomerRepository>();
             services.AddTransient<EventRepository>();
+            services.AddTransient<VenueRepository>();
             services.AddTransient<SeatingRepository>();
             services.AddTransient<TicketRepository>();
             

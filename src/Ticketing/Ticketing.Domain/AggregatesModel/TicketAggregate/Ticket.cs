@@ -1,17 +1,11 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Serilog;
 using Venu.Ticketing.Domain.Events;
 using Venu.Ticketing.Domain.SeedWork;
 
 namespace Venu.Ticketing.Domain.AggregatesModel.TicketAggregate
 {
-    [Table("Ticket")]
     public class Ticket : Entity, IAggregateRoot
     {
-        [Key]
-        [Column("TicketId")]
         public string Id { get; set; }
         public int SeatId { get; set; }
         public int CustomerId { get; set; }
@@ -26,8 +20,6 @@ namespace Venu.Ticketing.Domain.AggregatesModel.TicketAggregate
             CustomerId = customerId;
             CreatedOn = DateTime.UtcNow;
 
-            Log.Information($"Creating Ticket: {Id}, {SeatId}, {CustomerId}, {CreatedOn}");
-            
             this.UpdateSeat(seatId);
         }
 

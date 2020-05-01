@@ -1,17 +1,11 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Venu.Ticketing.Domain.SeedWork;
 
 namespace Venu.Ticketing.Domain.AggregatesModel.SeatingAggregate
 {
-    [Table("Seat")]
     public class Seat : Entity, IAggregateRoot
     {
-        [Key]
-        [Column("SeatId")]
-        public int Id { get; set; }
-        public string VenueSectionId { get; set; }
+        public string SectionId { get; set; }
         public int Row { get; set; }
         public int Column { get; set; }
         
@@ -20,9 +14,9 @@ namespace Venu.Ticketing.Domain.AggregatesModel.SeatingAggregate
         public DateTime CreatedOn { get; set; }
         public DateTime UpdateOn { get; set; }
 
-        public Seat(string venueSectionId, int row, int column)
+        public Seat(string sectionId, int row, int column)
         {
-            VenueSectionId = venueSectionId;
+            SectionId = sectionId;
             Row = row;
             Column = column;
             IsOccupied = false;

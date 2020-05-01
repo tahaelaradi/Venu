@@ -8,7 +8,7 @@ namespace Venu.Ticketing.API.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Event",
+                name: "Events",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -19,14 +19,14 @@ namespace Venu.Ticketing.API.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Event", x => x.Id);
+                    table.PrimaryKey("PK_Events", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Event");
+                name: "Events");
         }
     }
 }
