@@ -1,21 +1,20 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Venu.Ticketing.Domain.AggregatesModel.SeatingAggregate;
+﻿using System.Threading.Tasks;
+using Venu.Ticketing.API.Application.Queries;
 
 namespace Venu.Ticketing.API.Infrastructure.Services
 {
     public class VenueService : IVenueService
     {
-        private readonly ISeatingRepository _seatingRepository;
+        private readonly IVenueQueries _venueQueries;
 
-        public VenueService(ISeatingRepository seatingRepository)
+        public VenueService(IVenueQueries venueQueries)
         {
-            _seatingRepository = seatingRepository;
+            _venueQueries = venueQueries;
         }
 
-        public Task<IEnumerable<Seat>> GetSeatsByVenueId(int id)
+        public Task<Venue> GetSeatsByVenueId(string id)
         {
-            throw new System.NotImplementedException();
+            return _venueQueries.GetVenueAsync(id);
         }
     }
 }

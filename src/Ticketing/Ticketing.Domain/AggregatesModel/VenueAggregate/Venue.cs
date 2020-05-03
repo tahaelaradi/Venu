@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Serilog;
+using System.ComponentModel.DataAnnotations.Schema;
 using Venu.Ticketing.Domain.SeedWork;
 
 namespace Venu.Ticketing.Domain.AggregatesModel.VenueAggregate
 {
+    [Table("venues")]
     public class Venue : Entity, IAggregateRoot
     {
         public string Id { get; set; }

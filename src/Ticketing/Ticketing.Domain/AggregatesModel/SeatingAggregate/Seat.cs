@@ -1,8 +1,10 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using Venu.Ticketing.Domain.SeedWork;
 
 namespace Venu.Ticketing.Domain.AggregatesModel.SeatingAggregate
 {
+    [Table("seats")]
     public class Seat : Entity, IAggregateRoot
     {
         public string SectionId { get; set; }

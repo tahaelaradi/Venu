@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using Venu.Ticketing.Domain.Events;
 using Venu.Ticketing.Domain.SeedWork;
 
 namespace Venu.Ticketing.Domain.AggregatesModel.VenueAggregate
 {
+    [Table("sections")]
     public sealed class Section : Entity
     {
         public string Id { get; set; } 
@@ -12,7 +14,7 @@ namespace Venu.Ticketing.Domain.AggregatesModel.VenueAggregate
         public double Price { get; set;}
         public int Rows { get; set;}
         public int Columns { get; set;}
-        
+
         public Section(string venueId, int ordinal, double price, int rows, int columns)
         {
             Id = Guid.NewGuid().ToString();

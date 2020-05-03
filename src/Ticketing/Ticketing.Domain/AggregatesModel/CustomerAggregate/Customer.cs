@@ -1,8 +1,10 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using Venu.Ticketing.Domain.SeedWork;
 
 namespace Venu.Ticketing.Domain.AggregatesModel.CustomerAggregate
 {
+    [Table("customers")]
     public class Customer : Entity, IAggregateRoot
     {
         public string Username { get; set; }

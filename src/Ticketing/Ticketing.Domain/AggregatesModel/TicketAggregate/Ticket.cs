@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using Venu.Ticketing.Domain.Events;
 using Venu.Ticketing.Domain.SeedWork;
 
 namespace Venu.Ticketing.Domain.AggregatesModel.TicketAggregate
 {
+    [Table("tickets")]
     public class Ticket : Entity, IAggregateRoot
     {
         public string Id { get; set; }

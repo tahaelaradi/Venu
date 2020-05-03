@@ -39,6 +39,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticketing.Domain", "Ticketi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticketing.Infrastructure", "Ticketing\Ticketing.Infrastructure\Ticketing.Infrastructure.csproj", "{FBC599F3-E309-4230-8A7C-D11291BE5888}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Venu.Tests", "Venu.Tests", "{A7AAF327-CA00-421E-87FD-B8A73FE155B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticketing.Tests", "Venu.Tests\Ticketing.Tests\Ticketing.Tests.csproj", "{2C77C1F4-70CB-4909-8520-5E099E472130}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +97,10 @@ Global
 		{FBC599F3-E309-4230-8A7C-D11291BE5888}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBC599F3-E309-4230-8A7C-D11291BE5888}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBC599F3-E309-4230-8A7C-D11291BE5888}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C77C1F4-70CB-4909-8520-5E099E472130}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C77C1F4-70CB-4909-8520-5E099E472130}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C77C1F4-70CB-4909-8520-5E099E472130}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C77C1F4-70CB-4909-8520-5E099E472130}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +117,7 @@ Global
 		{AF817439-6395-4CCB-AE2D-478FAE13BDB5} = {FC47D46A-57BB-4A1A-AC52-A227289E85A8}
 		{980078BA-EDEF-4597-AFF5-9695BDCBEBCE} = {6D05D5BC-00C6-4330-A329-815209538136}
 		{FBC599F3-E309-4230-8A7C-D11291BE5888} = {6D05D5BC-00C6-4330-A329-815209538136}
+		{2C77C1F4-70CB-4909-8520-5E099E472130} = {A7AAF327-CA00-421E-87FD-B8A73FE155B2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C7EB0258-351C-4E78-BFD0-993ACF0661DC}

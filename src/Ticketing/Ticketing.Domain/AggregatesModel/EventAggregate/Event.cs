@@ -7,6 +7,7 @@ using Venu.Ticketing.Domain.SeedWork;
 
 namespace Venu.Ticketing.Domain.AggregatesModel.EventAggregate
 {
+    [Table("events")]
     public class Event : Entity, IAggregateRoot
     {
         public string Id { get; set; }

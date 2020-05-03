@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Hosting;
 using Venu.BuildingBlocks.Shared.Logging;
 using Venu.Ticketing.API.Infrastructure;
+using Venu.Ticketing.API.Infrastructure.AutofacModules;
 
 namespace Venu.Ticketing.API
 {
@@ -22,7 +24,7 @@ namespace Venu.Ticketing.API
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureContainer<ContainerBuilder>(builder =>
                 {
-                    builder.RegisterModule(new ApplicationModule());
+                    builder.RegisterModule(new ApplicationModule(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")));
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

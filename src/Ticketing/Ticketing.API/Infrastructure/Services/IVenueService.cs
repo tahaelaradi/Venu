@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Venu.Ticketing.Domain.AggregatesModel.SeatingAggregate;
+﻿using System.Threading.Tasks;
+using Venu.Ticketing.API.Application.Queries;
 
 namespace Venu.Ticketing.API.Infrastructure.Services
 {
     public interface IVenueService
     {
-        Task<IEnumerable<Seat>> GetSeatsByVenueId(int id);
+        Task<Venue> GetSeatsByVenueId(string id);
     }
 }

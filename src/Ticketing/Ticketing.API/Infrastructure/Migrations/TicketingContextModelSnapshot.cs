@@ -37,7 +37,7 @@ namespace Venu.Ticketing.API.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers");
+                    b.ToTable("customers");
                 });
 
             modelBuilder.Entity("Venu.Ticketing.Domain.AggregatesModel.EventAggregate.Event", b =>
@@ -59,7 +59,7 @@ namespace Venu.Ticketing.API.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Events");
+                    b.ToTable("events");
                 });
 
             modelBuilder.Entity("Venu.Ticketing.Domain.AggregatesModel.SeatingAggregate.Seat", b =>
@@ -89,7 +89,7 @@ namespace Venu.Ticketing.API.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Seats");
+                    b.ToTable("seats");
                 });
 
             modelBuilder.Entity("Venu.Ticketing.Domain.AggregatesModel.TicketAggregate.Ticket", b =>
@@ -111,7 +111,7 @@ namespace Venu.Ticketing.API.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tickets");
+                    b.ToTable("tickets");
                 });
 
             modelBuilder.Entity("Venu.Ticketing.Domain.AggregatesModel.VenueAggregate.Section", b =>
@@ -138,7 +138,7 @@ namespace Venu.Ticketing.API.Infrastructure.Migrations
 
                     b.HasIndex("VenueId");
 
-                    b.ToTable("Sections");
+                    b.ToTable("sections");
                 });
 
             modelBuilder.Entity("Venu.Ticketing.Domain.AggregatesModel.VenueAggregate.Venue", b =>
@@ -157,7 +157,7 @@ namespace Venu.Ticketing.API.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Venues");
+                    b.ToTable("venues");
                 });
 
             modelBuilder.Entity("Venu.Ticketing.Domain.AggregatesModel.VenueAggregate.Section", b =>
