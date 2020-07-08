@@ -16,3 +16,6 @@ Event management and ticketing app for creating, discovering and booking events 
 * [Apollo Client](https://github.com/apollographql/apollo-client).
 * CSS-in-JS with Base Web React Components ([Baseui](https://github.com/uber/baseweb)) and [Styled-Components](https://github.com/styled-components/styled-components).
 * [Docker Compose](https://docs.docker.com/compose/)
+
+## High Level Architecture
+![Architecture](assets/architecture-diagram.png?)
